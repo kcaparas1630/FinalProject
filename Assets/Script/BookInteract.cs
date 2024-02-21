@@ -1,15 +1,15 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour
+public class BookInteract : MonoBehaviour
 {
+    [SerializeField] private GameObject bookCanvas;
     [SerializeField] private GameObject interactiveText;
-    [SerializeField] private GameObject door;
-    [SerializeField] private Animator anim;
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
+        bookCanvas.SetActive(false);
         interactiveText.SetActive(false);
     }
 
@@ -18,19 +18,16 @@ public class DoorController : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (Input.GetKey(KeyCode.E))
+            if(Input.GetKey(KeyCode.E))
             {
-                anim.SetBool("Open", true);
+                bookCanvas.SetActive(true);
                 interactiveText.SetActive(false);
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
-        {
-            anim.SetBool("Open", false);
-            interactiveText.SetActive(false);
-        }
+        interactiveText.SetActive(false);
     }
 }

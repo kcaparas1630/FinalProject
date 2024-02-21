@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float gravity = -9.81f; // downward pull of gravity
     [SerializeField] private CharacterController player;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject torch;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,14 +40,16 @@ public class PlayerController : MonoBehaviour
         Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
         transform.Rotate(rotation);
 
-        if (movementDirection != Vector3.zero)
+        if (torch != null && torch.activeSelf)
         {
-           animator.SetBool("isMoving", true);
+            animator.SetBool("MovingWithTorch", movementDirection != Vector3.zero);
         }
         else
         {
-            animator.SetBool("isMoving", false);
+            animator.SetBool("IsMoving", movementDirection != Vector3.zero);
         }
+
+
 
     }
 
