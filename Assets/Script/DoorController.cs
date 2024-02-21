@@ -1,22 +1,36 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    private Animator animator;
-
-    private void Start()
+    public float interactionDistance;
+    public string doorOpenName, doorCloseName;
+    private void Update()
     {
-        // Assuming the Animator is on the same GameObject as this script
-        animator = GetComponent<Animator>();
-    }
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if(Physics.Raycast(ray, out hit, interactionDistance))
         {
-            Debug.Log("Open");
-            animator.SetBool("OpenDoor",true);
+            if(hit.collider.gameObject.tag == "door")
+            {
+                GameObject doorParent = hit.collider.transform.root.gameObject;
+                Animator doorAnim = doorParent.GetComponent<Animator>();
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if(doorAnim.GetCurrentAnimatorStateInfo(0).IsName(doorOpenName))
+                    {
+                        doorAnim.ResetTrigger("open");
+                        doorAnim.SetTrigger("close");
+                    }
+                    if (doorAnim.GetCurrentAnimatorStateInfo(0).IsName(doorCloseName))
+                    {
+                        doorAnim.ResetTrigger("close");
+                        doorAnim.SetTrigger("open");
+                    }
+                }
+            }
         }
     }
 
