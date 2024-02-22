@@ -24,8 +24,15 @@ public class StairsLevel : MonoBehaviour
             interactiveText.SetActive(true); 
             if(Input.GetKey(KeyCode.E))
             {
+                if (this.gameObject.CompareTag("Downstairs"))
+                {
+                    levelLoader.LoadPreviousLevel();
+                } 
+                else
+                {
+                    levelLoader.LoadNextLevel();
+                }
                 level.SetActive(true);
-                levelLoader.LoadNextLevel();
                 floorText.SetActive(false);
                 interactiveText.SetActive(false);
             }
