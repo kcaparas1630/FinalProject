@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SwipeController : MonoBehaviour
@@ -30,7 +29,7 @@ public class SwipeController : MonoBehaviour
     }
     public void Previous()
     {
-        if(currentPage > 1)
+        if (currentPage > 1)
         {
             currentPage--;
             targetPos -= pageStep;
@@ -41,6 +40,5 @@ public class SwipeController : MonoBehaviour
     {
         levelPagesRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
     }
-    
 
 }

@@ -8,12 +8,14 @@ public class TorchGrab : MonoBehaviour
     [SerializeField] private GameObject torchOnPlayer;
     [SerializeField] private Light torchLight;
     [SerializeField] private Animator anim;
+    private GameManager gameManager;
 
     private bool isCoroutineRunning = false;
     void Start()
     {
         interactiveText.SetActive(false);
         torchOnPlayer.SetActive(false);
+        gameManager = GameManager.Instance;
     }
 
     private void Update()
@@ -33,6 +35,21 @@ public class TorchGrab : MonoBehaviour
             if (Input.GetKey(KeyCode.E) && !isCoroutineRunning)
             {
                 StartCoroutine(GrabTorchWithDelay());
+                if (gameManager != null)
+                {
+                    // Assuming Exclamation_Yellow is a direct child of the book object
+                    Transform exclamationMark = transform.Find("Exclamation_Yellow");
+
+                    if (exclamationMark != null)
+                    {
+
+                        gameManager.CompleteTask(exclamationMark.gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Exclamation_Yellow not found as a child of the torch!");
+                    }
+                }
             }
         }
     }
@@ -56,7 +73,7 @@ public class TorchGrab : MonoBehaviour
         // Deactivate this torch and activate the torch on the player
         this.gameObject.SetActive(false);
         torchOnPlayer.SetActive(true);
-
+        
         // Hide the interactive text
         interactiveText.SetActive(false);
 

@@ -133,14 +133,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8573957461119565242}
-  - component: {fileID: 32402782919364345}
   m_Layer: 0
   m_Name: LevelLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8573957461119565242
 Transform:
   m_ObjectHideFlags: 0
@@ -157,20 +156,6 @@ Transform:
   - {fileID: 3135062536466692619}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &32402782919364345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8157312638775997125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4781d7374f677254fbb187fcbd7f8754, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transition: {fileID: 8643684256196080380}
-  transitionTime: 1
 --- !u!1 &9169623035745231298
 GameObject:
   m_ObjectHideFlags: 0
