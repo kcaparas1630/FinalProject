@@ -5,10 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     private int totalTasks = 0;
     private int completedTasks = 0;
-
+    [SerializeField] GameObject gateText;
     public GameObject passageBlock;
     private void Awake()
     {
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Find all tasks in the scene and count them
+        // Find all tasks
         GameObject[] tasks = GameObject.FindGameObjectsWithTag("Tasks");
         totalTasks = tasks.Length;
     }
@@ -37,7 +36,7 @@ public class GameManager : MonoBehaviour
         if (exclamationMark != null)
         {
             
-            // Disable or destroy the Exclamation_Yellow GameObject
+            // disable exclamationmark object
             exclamationMark.SetActive(false);
 
             // Increment completedTasks count
@@ -47,8 +46,9 @@ public class GameManager : MonoBehaviour
             // Check if all tasks are completed
             if (completedTasks >= totalTasks)
             {
-                Debug.Log("Gate has opened");
                 OpenGate();
+                gateText.SetActive(true);
+                StartCoroutine(DisappearGateText());
             }
         }
         else
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("ExclamationMark GameObject is null!");
         }
 
-        // You can add additional logic here for specific task completion actions.
+      
     }
 
     private void OpenGate()
@@ -64,12 +64,20 @@ public class GameManager : MonoBehaviour
         // Check if the passageBlock is not null
         if (passageBlock != null)
         {
-            // Assuming PassageBlock is a GameObject, you can disable it or destroy it
+     
             Destroy(passageBlock);
         }
         else
         {
             Debug.LogWarning("PassageBlock is not assigned in the GameManager!");
         }
+    }
+    private IEnumerator DisappearGateText()
+    {
+        // Wait for a certain duration (you can adjust the time)
+        yield return new WaitForSeconds(5.0f); // Adjust the time as needed
+
+        // Deactivate gateText
+        gateText.SetActive(false);
     }
 }
