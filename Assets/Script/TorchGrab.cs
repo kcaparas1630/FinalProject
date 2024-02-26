@@ -59,10 +59,8 @@ public class TorchGrab : MonoBehaviour
 
         // Play the "Grab" animation
         anim.SetTrigger("Grab");
-
-        // Wait for 2 or 3 seconds
-        float delay = Random.Range(2f, 3f);
-        yield return new WaitForSeconds(delay);
+        //wait for 2 seconds
+        yield return new WaitForSeconds(1.8f);
 
         // Deactivate this torch and activate the torch on the player
         this.gameObject.SetActive(false);

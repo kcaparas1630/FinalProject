@@ -9,6 +9,7 @@ TagManager:
   - Chest
   - Tasks
   - Block
+  - WallBasement
   layers:
   - Default
   - TransparentFX
