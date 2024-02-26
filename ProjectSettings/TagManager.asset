@@ -10,15 +10,16 @@ TagManager:
   - Tasks
   - Block
   - WallBasement
+  - Basement
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Basement
   - Water
   - UI
-  - 
-  - 
+  - Wall
+  - Floors
   - 
   - 
   - 
