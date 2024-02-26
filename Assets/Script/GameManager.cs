@@ -67,15 +67,11 @@ public class GameManager : MonoBehaviour
      
             Destroy(passageBlock);
         }
-        else
-        {
-            Debug.LogWarning("PassageBlock is not assigned in the GameManager!");
-        }
     }
     private IEnumerator DisappearGateText()
     {
-        // Wait for a certain duration (you can adjust the time)
-        yield return new WaitForSeconds(5.0f); // Adjust the time as needed
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5.0f);
 
         // Deactivate gateText
         gateText.SetActive(false);

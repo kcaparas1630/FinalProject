@@ -20,7 +20,6 @@ public class TorchGrab : MonoBehaviour
 
     private void Update()
     {
-        // Check for "R" key press to turn off torch light
         if (Input.GetKeyDown(KeyCode.R))
         {
             TurnOffTorch();
@@ -37,17 +36,12 @@ public class TorchGrab : MonoBehaviour
                 StartCoroutine(GrabTorchWithDelay());
                 if (gameManager != null)
                 {
-                    // Assuming Exclamation_Yellow is a direct child of the book object
                     Transform exclamationMark = transform.Find("Exclamation_Yellow");
 
                     if (exclamationMark != null)
                     {
 
                         gameManager.CompleteTask(exclamationMark.gameObject);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Exclamation_Yellow not found as a child of the torch!");
                     }
                 }
             }

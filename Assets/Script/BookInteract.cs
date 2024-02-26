@@ -29,17 +29,12 @@ public class BookInteract : MonoBehaviour
                 
                 if (gameManager != null)
                 {
-                    // Assuming Exclamation_Yellow is a direct child of the book object
                     Transform exclamationMark = transform.Find("Exclamation_Yellow");
                     
                     if (exclamationMark != null)
                     {
                         
                         gameManager.CompleteTask(exclamationMark.gameObject);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Exclamation_Yellow not found as a child of the book!");
                     }
                 }
             }
