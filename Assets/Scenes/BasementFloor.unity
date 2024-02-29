@@ -5305,7 +5305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388340823}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.011903658, y: 0.000000017339056, z: 2.0641283e-10, w: 0.9999292}
+  m_LocalRotation: {x: -0.011903658, y: -0.000000017339051, z: -2.0641276e-10, w: 0.9999292}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7164,7 +7164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995533555671712283, guid: e22e29840e07aca4693bb3288c909879, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8830,7 +8830,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760045610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.034585454, y: -0.00000000214899, z: 7.4368296e-11, w: 0.99940175}
+  m_LocalRotation: {x: 0.034585454, y: 0.0000000021495112, z: -7.438633e-11, w: 0.99940175}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9030,6 +9030,10 @@ PrefabInstance:
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_Name
       value: Dungeon_Big_Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_IsActive
@@ -9745,6 +9749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bookCanvas: {fileID: 1255272802}
   interactiveText: {fileID: 77624582}
+  gameManager: {fileID: 991766499}
+  exclamationMarkObject: {fileID: 1653298009}
 --- !u!1001 &824571100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11607,6 +11613,7 @@ MonoBehaviour:
   player: {fileID: 965988471}
   animator: {fileID: 965988473}
   torch: {fileID: 1825022176}
+  model: {fileID: 965988470}
 --- !u!95 &965988473 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4540229000190281644, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
@@ -11782,6 +11789,10 @@ PrefabInstance:
     - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
       propertyPath: m_Name
       value: Hallway_Full (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13091,6 +13102,10 @@ PrefabInstance:
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_Name
       value: Dungeon_Big_Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_IsActive
@@ -14879,6 +14894,10 @@ PrefabInstance:
       value: Staircase
       objectReference: {fileID: 0}
     - target: {fileID: 716751741729056052, guid: fe920f08a7bd91440b54ef922f9bf5b5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 716751741729056052, guid: fe920f08a7bd91440b54ef922f9bf5b5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -15531,6 +15550,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1684166694}
     m_Modifications:
+    - target: {fileID: 936655011711060175, guid: 5e10be2f5a748844dbd0b2b7e6fafd4a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 936655011711060175, guid: 5e10be2f5a748844dbd0b2b7e6fafd4a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.2600012
@@ -16654,7 +16677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8971399676813624615, guid: 03020aab9adeeb54f9194380cf49b4a7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20223,7 +20246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995533555671712283, guid: e22e29840e07aca4693bb3288c909879, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20453,6 +20476,10 @@ PrefabInstance:
     - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
       propertyPath: m_Name
       value: Hallway_Full
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2254754913457795574, guid: bd271741385672b478a33a0d372490ea, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -21304,6 +21331,10 @@ PrefabInstance:
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_Name
       value: Dungeon_Big_Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7969972704443782057, guid: 3ef94e73d5607784fbcbba8de4155b1e, type: 3}
       propertyPath: m_IsActive
@@ -22352,7 +22383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   m_IgnoreTag: Player
   m_TransparentLayers:
     serializedVersion: 2
@@ -23903,7 +23934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741089945, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.25
+      value: 0.058
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741089945, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23943,7 +23974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741256888, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741256889, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_Name
@@ -25264,7 +25295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8971399676813624615, guid: 03020aab9adeeb54f9194380cf49b4a7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26511,7 +26542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741089945, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.56
+      value: 4.259
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741089945, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26551,7 +26582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741256888, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3827979668741256889, guid: 3095027673429ac43888f84f7de0b80e, type: 3}
       propertyPath: m_Name

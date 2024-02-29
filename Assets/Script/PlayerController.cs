@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
     private float vertInput;
     private float ySpeed;
     private float gravity = -9.81f; // downward pull of gravity
+    private float rotateToFaceMovementSpeed = 5f;
     [SerializeField] private CharacterController player;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject torch;
+    [SerializeField] private GameObject model;
     // Start is called before the first frame update
 
    
@@ -38,12 +40,18 @@ public class PlayerController : MonoBehaviour
         Vector3 movementDirection = new Vector3(horizInput, 0, vertInput);
         float magnitude = Mathf.Clamp01(movementDirection.magnitude) * speed;
         movementDirection = transform.TransformDirection(movementDirection);
+
+        if(movementDirection.magnitude > 0 )
+        {
+            RotateToFaceMovement(movementDirection);
+        }
+
         ySpeed += gravity * Time.deltaTime;
         Vector3 velocity = movementDirection * magnitude;
         velocity.y = ySpeed;
         player.Move(velocity * Time.deltaTime);
-        Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
-        transform.Rotate(rotation);
+        //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
+        //transform.Rotate(rotation);
 
         if (torch != null && torch.activeSelf)
         {
@@ -55,6 +63,12 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+
+    void  RotateToFaceMovement(Vector3 moveDirection)
+    {
+        Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+        model.transform.rotation = Quaternion.Slerp(model.transform.rotation, newRotation,rotateToFaceMovementSpeed * Time.deltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
