@@ -5305,7 +5305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388340823}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.011903658, y: -0.000000017339051, z: -2.0641276e-10, w: 0.9999292}
+  m_LocalRotation: {x: -0.011903658, y: 0.000000017339056, z: 2.0641283e-10, w: 0.9999292}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8834,7 +8834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760045610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.034585454, y: 0.0000000021495112, z: -7.438633e-11, w: 0.99940175}
+  m_LocalRotation: {x: 0.034585454, y: -0.0000000021495103, z: 7.43863e-11, w: 0.99940175}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9429,7 +9429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808871644}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.3283115, y: -0.000000022984679, z: -0.000000007988967, w: 0.9445695}
+  m_LocalRotation: {x: -0.3283115, y: 0.000000022984679, z: 0.000000007988967, w: 0.9445695}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11619,6 +11619,7 @@ MonoBehaviour:
   animator: {fileID: 965988473}
   torch: {fileID: 1825022176}
   model: {fileID: 965988470}
+  cam: {fileID: 1938633311}
 --- !u!95 &965988473 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4540229000190281644, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
@@ -22269,7 +22270,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 965988469}
+  m_LookAt: {fileID: 85278910}
   m_Follow: {fileID: 965988469}
   m_CommonLens: 1
   m_Lens:
@@ -24835,7 +24836,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938633309}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 107e872854f6ffd428e75d01f0859098, type: 3}
   m_Name: 
