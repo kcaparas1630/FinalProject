@@ -8,7 +8,6 @@ public class SwipeController : MonoBehaviour
     int currentPage;
     Vector3 targetPos;
     private float horizInput;
-    private bool isMoving = false;
     [SerializeField] Vector3 pageStep;
     [SerializeField] RectTransform levelPagesRect;
 
@@ -19,19 +18,6 @@ public class SwipeController : MonoBehaviour
     {
         currentPage = 1;
         targetPos = levelPagesRect.localPosition;
-    }
-    private void Update()
-    {
-        horizInput = Input.GetAxisRaw("Horizontal");
-
-        if (horizInput > 0 && !isMoving) 
-        {
-            Next();
-        }
-        else if (horizInput < 0 && !isMoving)
-        {
-            Previous();
-        }
     }
     public void Next()
     {
@@ -53,7 +39,7 @@ public class SwipeController : MonoBehaviour
     }
     void MovePage()
     {
-        isMoving = true;
+    
         levelPagesRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
     }
 
