@@ -11,6 +11,7 @@ TagManager:
   - Block
   - WallBasement
   - Basement
+  - Staircase
   layers:
   - Default
   - TransparentFX

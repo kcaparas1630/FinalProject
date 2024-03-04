@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,18 +19,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject torch;
     [SerializeField] private GameObject model;
     [SerializeField] private Camera cam;                // a reference to the main camera
+    [SerializeField] private CinemachineFreeLook freeLook; // reference to freeLook Camera
+    [SerializeField] private CinemachineVirtualCamera virtualCamera; // a reference to virtual camera.
     private float rotateToFaceAwayFromCameraSpeed = 5f; // the speed to rotate our Player to align with the camera view.
-                                                        // Start is called before the first frame update
-
+   
 
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
 
-        
-
     }
+   
 
     // Update is called once per frame
     void Update()
@@ -44,6 +45,12 @@ public class PlayerController : MonoBehaviour
         // ensure diagonal movement doesn't exceed horiz/vert movement speed
         movement = Vector3.ClampMagnitude(movement, 1.0f);
         animator.SetFloat("Velocity", movement.magnitude);
+
+        if (torch != null && torch.activeSelf)
+        {
+            animator.SetBool("MovingWithTorch", true);
+            animator.SetFloat("Velocity", movement.magnitude);
+        }
         // convert from local to global coordinates
         movement = transform.TransformDirection(movement);
         if (movement.magnitude > 0)
@@ -60,38 +67,13 @@ public class PlayerController : MonoBehaviour
         movement *= Time.deltaTime; // make all movement processor independent
         // move the player  (using the character controller)
         player.Move(movement);
-        //Vector3 movementDirection = new Vector3(horizInput, 0, vertInput);
-        //float magnitude = Mathf.Clamp01(movementDirection.magnitude) * speed;
-        //movementDirection = transform.TransformDirection(movementDirection);
-
-        //if(movementDirection.magnitude > 0 )
-        //{
-        //    RotateToFaceMovement(movementDirection);
-        //}
-
-        //ySpeed += gravity * Time.deltaTime;
-        //Vector3 velocity = movementDirection * magnitude;
-        //velocity.y = ySpeed;
-        //player.Move(velocity * Time.deltaTime);
-        //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
-        //transform.Rotate(rotation);
-
-        if (torch != null && torch.activeSelf)
-        {
-            animator.SetBool("MovingWithTorch", true);
-        }
-        //else
-        //{
-        //    animator.SetBool("IsMoving", movementDirection != Vector3.zero);
-        //}
-
-
+     
     }
 
-    void  RotateToFaceMovement(Vector3 moveDirection)
+    void RotateToFaceMovement(Vector3 moveDirection)
     {
         Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
-        model.transform.rotation = Quaternion.Slerp(model.transform.rotation, newRotation,rotateToFaceMovementSpeed * Time.deltaTime);
+        model.transform.rotation = Quaternion.Slerp(model.transform.rotation, newRotation, rotateToFaceMovementSpeed * Time.deltaTime);
     }
     private void RotatePlayerToFaceAwayFromCamera()
     {
@@ -115,6 +97,30 @@ public class PlayerController : MonoBehaviour
         {
             body.velocity = hit.moveDirection * pushForce;
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Staircase"))
+        {
+            freeLook.enabled = false;
+            virtualCamera.enabled = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Staircase"))
+        {
+            freeLook.enabled = true;
+            virtualCamera.enabled = false;
+        }
+    }
+
+    private IEnumerator IdleChangeAnimOnDelay()
+    {
+        yield return new WaitForSeconds(5f);
+
+        animator.SetTrigger("IdleWait");
     }
 
 }

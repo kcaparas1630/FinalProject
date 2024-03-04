@@ -33,6 +33,7 @@ public class TorchGrab : MonoBehaviour
             interactiveText.SetActive(true);
             if (Input.GetKey(KeyCode.E) && !isCoroutineRunning)
             {
+               
                 StartCoroutine(GrabTorchWithDelay());
                 if (gameManager != null)
                 {
@@ -56,7 +57,7 @@ public class TorchGrab : MonoBehaviour
     private IEnumerator GrabTorchWithDelay()
     {
         isCoroutineRunning = true;
-
+       
         // Play the "Grab" animation
         anim.SetTrigger("Grab");
         //wait for 2 seconds

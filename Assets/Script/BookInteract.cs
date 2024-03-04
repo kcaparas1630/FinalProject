@@ -18,7 +18,14 @@ public class BookInteract : MonoBehaviour
     {
         bookCanvas.SetActive(false);
     }
-
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    public void Continue()
+    {
+        Time.timeScale = 1;
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -29,6 +36,7 @@ public class BookInteract : MonoBehaviour
             {
                 bookCanvas.SetActive(true);
                 interactiveText.SetActive(false);
+                //Pause(); Find a way to pause but continue canvas
             }
         }
     }
