@@ -7,8 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private int totalTasks = 0;
     private int completedTasks = 0;
+    private int SkeysCollected = 0;
+    private int GkeysCollected = 0;
     [SerializeField] GameObject gateText;
+    [SerializeField] UpdateUIManager ui;
     public GameObject passageBlock;
+ 
     private void Awake()
     {
         // Ensure there's only one instance of the GameManager
@@ -68,6 +72,46 @@ public class GameManager : MonoBehaviour
             Destroy(passageBlock);
         }
     }
+
+    public void CollectSKey()
+    {
+        SkeysCollected++;
+        ui.UpdateSKeyCount(SkeysCollected);
+    }
+    public bool SKeyValidation()
+    {
+        if (SkeysCollected >= 1)
+        {
+            return true;
+        }
+        return false;
+    }
+    public void UseSKey()
+    {
+        if (SKeyValidation())
+        {
+            SkeysCollected--;
+            ui.UpdateSKeyCount(SkeysCollected);
+        }
+
+    }
+    public void CollectGKey()
+    {
+        GkeysCollected++;
+        ui.UpdateGKeyCount(GkeysCollected);
+    }
+    public void UseGKey()
+    {
+        if (GkeysCollected > 0)
+        {
+            GkeysCollected--;
+            ui.UpdateGKeyCount(GkeysCollected);
+        }
+        else
+        {
+            Debug.Log("No Golden Keys available");
+        }
+    }
     private IEnumerator DisappearGateText()
     {
         // Wait for 5 seconds
@@ -76,4 +120,5 @@ public class GameManager : MonoBehaviour
         // Deactivate gateText
         gateText.SetActive(false);
     }
+
 }

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 9f;
-    public float rotationSpeed = 720f;
+    public float rotationSpeed = 100f;
     private float horizInput;
     private float vertInput;
     private float ySpeed;
@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-
     }
    
 
@@ -37,10 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         horizInput = Input.GetAxis("Horizontal");
         vertInput = Input.GetAxis("Vertical");
-    }
 
-    void FixedUpdate()
-    {
         Vector3 movement = new Vector3(horizInput, 0, vertInput);
         // ensure diagonal movement doesn't exceed horiz/vert movement speed
         movement = Vector3.ClampMagnitude(movement, 1.0f);
@@ -57,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             RotateToFaceMovement(movement);
             RotatePlayerToFaceAwayFromCamera();
+            
         }
         movement *= speed;
 
@@ -67,7 +64,25 @@ public class PlayerController : MonoBehaviour
         movement *= Time.deltaTime; // make all movement processor independent
         // move the player  (using the character controller)
         player.Move(movement);
-     
+        //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
+        //transform.Rotate(rotation);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Staircase") || other.gameObject.CompareTag("Hallway"))
+        {
+            freeLook.enabled = false;
+            virtualCamera.enabled = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Staircase"))
+        {
+            freeLook.enabled = true;
+            virtualCamera.enabled = false;
+        }
     }
 
     void RotateToFaceMovement(Vector3 moveDirection)
@@ -99,22 +114,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Staircase"))
-        {
-            freeLook.enabled = false;
-            virtualCamera.enabled = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Staircase"))
-        {
-            freeLook.enabled = true;
-            virtualCamera.enabled = false;
-        }
-    }
+  
+
 
     private IEnumerator IdleChangeAnimOnDelay()
     {

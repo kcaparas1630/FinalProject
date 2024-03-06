@@ -12,6 +12,12 @@ TagManager:
   - WallBasement
   - Basement
   - Staircase
+  - Hallway
+  - Keys
+  - GChest
+  - SilverKeys
+  - FakeChest
+  - ScrollChest
   layers:
   - Default
   - TransparentFX
