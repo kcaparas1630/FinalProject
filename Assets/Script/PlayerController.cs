@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject torch;
     [SerializeField] private GameObject model;
+    [SerializeField] private AudioSource movementAudioSource;
     [SerializeField] private Camera cam;                // a reference to the main camera
     [SerializeField] private CinemachineFreeLook freeLook; // reference to freeLook Camera
     [SerializeField] private CinemachineVirtualCamera virtualCamera; // a reference to virtual camera.
@@ -53,7 +54,17 @@ public class PlayerController : MonoBehaviour
         {
             RotateToFaceMovement(movement);
             RotatePlayerToFaceAwayFromCamera();
-            
+
+            // Check if the audio is not already playing, then play it
+            if (!movementAudioSource.isPlaying)
+            {
+                movementAudioSource.Play();
+            }
+        }
+        else
+        {
+            // Stop the audio when the player is not moving
+            movementAudioSource.Stop();
         }
         movement *= speed;
 
@@ -64,8 +75,8 @@ public class PlayerController : MonoBehaviour
         movement *= Time.deltaTime; // make all movement processor independent
         // move the player  (using the character controller)
         player.Move(movement);
-        //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
-        //transform.Rotate(rotation);
+        Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
+        transform.Rotate(rotation);
     }
 
     private void OnTriggerStay(Collider other)

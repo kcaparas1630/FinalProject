@@ -9,7 +9,8 @@ public class ItemInteraction : MonoBehaviour
     [SerializeField] private GameObject itemObject;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
-    [SerializeField] private GameObject monster;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private Sound soundManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,8 +96,8 @@ public class ItemInteraction : MonoBehaviour
     private IEnumerator MonsterInstantiate()
     {
         yield return new WaitForSeconds(5f);
-        monster.SetActive(true);
-        Destroy(this.gameObject);
+        enemy.SetActive(true);
+        soundManager.MonsterAwake();
     }
     private void OnTriggerExit(Collider other)
     {
