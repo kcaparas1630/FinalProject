@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CinemachineFreeLook freeLook; // reference to freeLook Camera
     [SerializeField] private CinemachineVirtualCamera virtualCamera; // a reference to virtual camera.
     private float rotateToFaceAwayFromCameraSpeed = 5f; // the speed to rotate our Player to align with the camera view.
-   
+    private bool isTorchGrabbingAnimationPlaying = false;
+    private bool isDoorOpeningAnimationPlaying = false;
 
     void Start()
     {
@@ -35,48 +36,60 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizInput = Input.GetAxis("Horizontal");
-        vertInput = Input.GetAxis("Vertical");
+            horizInput = Input.GetAxis("Horizontal");
+            vertInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizInput, 0, vertInput);
-        // ensure diagonal movement doesn't exceed horiz/vert movement speed
-        movement = Vector3.ClampMagnitude(movement, 1.0f);
-        animator.SetFloat("Velocity", movement.magnitude);
-
-        if (torch != null && torch.activeSelf)
-        {
-            animator.SetBool("MovingWithTorch", true);
+            Vector3 movement = new Vector3(horizInput, 0, vertInput);
+            // ensure diagonal movement doesn't exceed horiz/vert movement speed
+            movement = Vector3.ClampMagnitude(movement, 1.0f);
             animator.SetFloat("Velocity", movement.magnitude);
-        }
-        // convert from local to global coordinates
-        movement = transform.TransformDirection(movement);
-        if (movement.magnitude > 0)
-        {
-            RotateToFaceMovement(movement);
-            RotatePlayerToFaceAwayFromCamera();
 
-            // Check if the audio is not already playing, then play it
-            if (!movementAudioSource.isPlaying)
+            if (torch != null && torch.activeSelf)
             {
-                movementAudioSource.Play();
+                animator.SetBool("MovingWithTorch", true);
+                animator.SetFloat("Velocity", movement.magnitude);
             }
-        }
-        else
-        {
-            // Stop the audio when the player is not moving
-            movementAudioSource.Stop();
-        }
-        movement *= speed;
+            // convert from local to global coordinates
+            movement = transform.TransformDirection(movement);
+            if (movement.magnitude > 0)
+            {
+                RotateToFaceMovement(movement);
+                RotatePlayerToFaceAwayFromCamera();
 
-        // calculate yVelocity and add it to the player's movement vector
-        yVelocity += gravity * Time.deltaTime;
+                // Check if the audio is not already playing, then play it
+                if (!movementAudioSource.isPlaying)
+                {
+                    movementAudioSource.Play();
+                }
+            }
+            else
+            {
+                // Stop the audio when the player is not moving
+                movementAudioSource.Stop();
+            }
+            movement *= speed;
 
-        movement.y = yVelocity;
-        movement *= Time.deltaTime; // make all movement processor independent
-        // move the player  (using the character controller)
-        player.Move(movement);
-        Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
-        transform.Rotate(rotation);
+            // calculate yVelocity and add it to the player's movement vector
+            yVelocity += gravity * Time.deltaTime;
+
+            movement.y = yVelocity;
+            movement *= Time.deltaTime; // make all movement processor independent
+                                        // move the player  (using the character controller)
+            player.Move(movement);
+            //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
+            //transform.Rotate(rotation);
+
+
+    }
+
+    public void SetTorchGrabbingAnimationPlaying(bool value)
+    {
+        isTorchGrabbingAnimationPlaying = value;
+    }
+
+    public void SetDoorOpeningAnimationPlaying(bool value)
+    {
+        isDoorOpeningAnimationPlaying = value;
     }
 
     private void OnTriggerStay(Collider other)
@@ -124,9 +137,6 @@ public class PlayerController : MonoBehaviour
             body.velocity = hit.moveDirection * pushForce;
         }
     }
-
-  
-
 
     private IEnumerator IdleChangeAnimOnDelay()
     {

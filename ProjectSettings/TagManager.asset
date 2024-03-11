@@ -18,6 +18,7 @@ TagManager:
   - SilverKeys
   - FakeChest
   - ScrollChest
+  - GateFinish
   layers:
   - Default
   - TransparentFX

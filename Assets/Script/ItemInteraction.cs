@@ -17,6 +17,61 @@ public class ItemInteraction : MonoBehaviour
         interactiveText.SetActive(false);
         keyText.SetActive(false);
     }
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            if (this.gameObject.CompareTag("GChest"))
+            {
+                Debug.Log("GChest");
+                keyText.SetActive(true);
+                if (gameManager.SKeyValidation())
+                {
+                    gameManager.UseSKey();
+                    anim.SetTrigger("Open");
+                    StartCoroutine(GetGoldenKey());
+                }
+            }
+            else if (this.gameObject.CompareTag("ScrollChest"))
+            {
+                Debug.Log("Scroll");
+                keyText.SetActive(true);
+                if (gameManager.SKeyValidation())
+                {
+                    gameManager.UseSKey();
+                    anim.SetTrigger("Open");
+                    keyText.SetActive(false);
+                    StartCoroutine(GetScroll());
+                }
+            }
+            else if (this.gameObject.CompareTag("FakeChest"))
+            {
+                Debug.Log("FAKE");
+                keyText.SetActive(true);
+                if (gameManager.SKeyValidation())
+                {
+                    gameManager.UseSKey();
+                    anim.SetTrigger("Open");
+                    keyText.SetActive(false);
+                    StartCoroutine(MonsterInstantiate());
+                }
+            }
+            else if (this.gameObject.CompareTag("SilverKeys"))
+            {
+                itemObject.SetActive(false);
+                interactiveText.SetActive(false);
+                keyText.SetActive(false);
+                gameManager.CollectSKey();
+                // add implementation with inventory soon. For now, just hide it.
+                // check condition if chest,
+            }
+        }
+        else
+        {
+            keyText.SetActive(false);
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -25,6 +80,7 @@ public class ItemInteraction : MonoBehaviour
             interactiveText.SetActive(true);
             if (this.gameObject.CompareTag("GChest"))
             {
+                Debug.Log("GChest");
                 keyText.SetActive(true);
                 if(Input.GetKey(KeyCode.E))
                 {
@@ -41,6 +97,7 @@ public class ItemInteraction : MonoBehaviour
             }
             else if (this.gameObject.CompareTag("ScrollChest"))
             {
+                Debug.Log("Scroll");
                 keyText.SetActive(true);
                 if (Input.GetKey(KeyCode.E))
                 {
@@ -55,6 +112,7 @@ public class ItemInteraction : MonoBehaviour
             }
             else if (this.gameObject.CompareTag("FakeChest"))
             {
+                Debug.Log("FAKE");
                 keyText.SetActive(true);
                 if (Input.GetKey(KeyCode.E))
                 {

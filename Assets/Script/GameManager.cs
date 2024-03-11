@@ -80,11 +80,7 @@ public class GameManager : MonoBehaviour
     }
     public bool SKeyValidation()
     {
-        if (SkeysCollected >= 1)
-        {
-            return true;
-        }
-        return false;
+        return SkeysCollected > 0;
     }
     public void UseSKey()
     {

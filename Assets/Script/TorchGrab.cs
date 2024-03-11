@@ -8,6 +8,8 @@ public class TorchGrab : MonoBehaviour
     [SerializeField] private GameObject torchOnPlayer;
     [SerializeField] private Light torchLight;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioSource grabAudioSource;
+
     private GameManager gameManager;
 
     private bool isCoroutineRunning = false;
@@ -24,6 +26,7 @@ public class TorchGrab : MonoBehaviour
         {
             TurnOffTorch();
         }
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -57,8 +60,12 @@ public class TorchGrab : MonoBehaviour
     private IEnumerator GrabTorchWithDelay()
     {
         isCoroutineRunning = true;
-       
+
         // Play the "Grab" animation
+        if (!grabAudioSource.isPlaying)
+        {
+            grabAudioSource.Play();
+        }
         anim.SetTrigger("Grab");
         //wait for 2 seconds
         yield return new WaitForSeconds(1.8f);
@@ -69,7 +76,7 @@ public class TorchGrab : MonoBehaviour
         
         // Hide the interactive text
         interactiveText.SetActive(false);
-
+    
         isCoroutineRunning = false;
     }
 
