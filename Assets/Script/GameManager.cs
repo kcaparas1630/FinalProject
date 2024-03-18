@@ -16,16 +16,27 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // Ensure there's only one instance of the GameManager
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
+        Messenger.AddListener(GameEvent.KEY_PICKUP, CollectSKey);
+        Messenger.AddListener(GameEvent.GOLDKEY_PICKUP, CollectGKey);
+        Messenger.AddListener(GameEvent.OPEN_CHEST, UseSKey);
+        Messenger.AddListener(GameEvent.OPEN_SCROLLCHEST, UseSKey);
+        Messenger.AddListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
+    }
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.KEY_PICKUP, CollectSKey);
+        Messenger.RemoveListener(GameEvent.GOLDKEY_PICKUP, CollectGKey);
+        Messenger.RemoveListener(GameEvent.OPEN_CHEST, UseSKey);
+        Messenger.RemoveListener(GameEvent.OPEN_SCROLLCHEST, UseSKey);
+        Messenger.RemoveListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
     }
 
     private void Start()
