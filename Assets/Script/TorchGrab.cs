@@ -9,15 +9,12 @@ public class TorchGrab : MonoBehaviour
     [SerializeField] private Light torchLight;
     [SerializeField] private Animator anim;
     [SerializeField] private AudioSource grabAudioSource;
-
-    private GameManager gameManager;
-
+    [SerializeField] private GameObject exclamationMark;
     private bool isCoroutineRunning = false;
     void Start()
     {
         interactiveText.SetActive(false);
         torchOnPlayer.SetActive(false);
-        gameManager = GameManager.Instance;
     }
 
     private void Update()
@@ -29,25 +26,38 @@ public class TorchGrab : MonoBehaviour
         
     }
 
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Player")
+    //    {
+    //        interactiveText.SetActive(true);
+    //        if (Input.GetKey(KeyCode.E) && !isCoroutineRunning)
+    //        {
+
+    //            StartCoroutine(GrabTorchWithDelay());
+    //            if (gameManager != null)
+    //            {
+    //                Transform exclamationMark = transform.Find("Exclamation_Yellow");
+
+    //                if (exclamationMark != null)
+    //                {
+
+    //                    gameManager.CompleteTask(exclamationMark.gameObject);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (Input.GetKey(KeyCode.E) && !isCoroutineRunning)
+            if(Input.GetKey(KeyCode.E) && !isCoroutineRunning)
             {
-               
+                exclamationMark.SetActive(false);
+                Messenger.Broadcast(GameEvent.TORCH_GRAB);
                 StartCoroutine(GrabTorchWithDelay());
-                if (gameManager != null)
-                {
-                    Transform exclamationMark = transform.Find("Exclamation_Yellow");
-
-                    if (exclamationMark != null)
-                    {
-
-                        gameManager.CompleteTask(exclamationMark.gameObject);
-                    }
-                }
             }
         }
     }

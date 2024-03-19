@@ -9,4 +9,6 @@ public static class GameEvent
     public const string OPEN_CHEST = "OPEN_CHEST";
     public const string OPEN_SCROLLCHEST = "OPEN_SCROLLCHEST";
     public const string OPEN_MONSTERCHEST = "OPEN_MONSTERCHEST";
+    public const string TORCH_GRAB = "TORCH_GRAB";
+    public const string CLOSE_CANVAS = "CLOSE_CANVAS";
 }

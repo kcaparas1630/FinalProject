@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener(GameEvent.OPEN_CHEST, UseSKey);
         Messenger.AddListener(GameEvent.OPEN_SCROLLCHEST, UseSKey);
         Messenger.AddListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
+        Messenger.AddListener(GameEvent.TORCH_GRAB, CompleteTask);
+        Messenger.AddListener(GameEvent.CLOSE_CANVAS, CompleteTask);
     }
     private void OnDestroy()
     {
@@ -37,6 +39,9 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener(GameEvent.OPEN_CHEST, UseSKey);
         Messenger.RemoveListener(GameEvent.OPEN_SCROLLCHEST, UseSKey);
         Messenger.RemoveListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
+        Messenger.RemoveListener(GameEvent.TORCH_GRAB, CompleteTask);
+        Messenger.RemoveListener(GameEvent.CLOSE_CANVAS, CompleteTask);
+
     }
 
     private void Start()
@@ -46,32 +51,19 @@ public class GameManager : MonoBehaviour
         totalTasks = tasks.Length;
     }
 
-    public void CompleteTask(GameObject exclamationMark)
+    public void CompleteTask()
     {
-        if (exclamationMark != null)
+        // Increment completedTasks count
+        completedTasks++;
+        Debug.Log(completedTasks);
+        // Check if all tasks are completed
+        if (completedTasks >= totalTasks)
         {
-            
-            // disable exclamationmark object
-            exclamationMark.SetActive(false);
-
-            // Increment completedTasks count
-            completedTasks++;
-            Debug.Log(completedTasks);
-
-            // Check if all tasks are completed
-            if (completedTasks >= totalTasks)
-            {
-                OpenGate();
-                gateText.SetActive(true);
-                StartCoroutine(DisappearGateText());
-            }
+            OpenGate();
+            gateText.SetActive(true);
+            StartCoroutine(DisappearGateText());
         }
-        else
-        {
-            Debug.LogWarning("ExclamationMark GameObject is null!");
-        }
-
-      
+ 
     }
 
     private void OpenGate()

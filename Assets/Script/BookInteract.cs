@@ -6,6 +6,7 @@ public class BookInteract : MonoBehaviour
 {
     [SerializeField] private GameObject bookCanvas;
     [SerializeField] private GameObject interactiveText;
+    [SerializeField] private GameObject exclamationMark;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,9 @@ public class BookInteract : MonoBehaviour
 
     public void CloseCanvas()
     {
+        exclamationMark.SetActive(false);
         bookCanvas.SetActive(false);
+        Messenger.Broadcast(GameEvent.CLOSE_CANVAS);
     }
     public void Pause()
     {
