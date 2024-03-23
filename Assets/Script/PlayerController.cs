@@ -25,23 +25,52 @@ public class PlayerController : MonoBehaviour
     private float rotateToFaceAwayFromCameraSpeed = 5f; // the speed to rotate our Player to align with the camera view.
     private bool isTorchGrabbingAnimationPlaying = false;
     private bool isDoorOpeningAnimationPlaying = false;
+    private bool isCutscenePlaying = false;
 
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
-   
+
+    private void Awake()
+    {
+        Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutsceneFinished);
+    }
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutsceneFinished);
+    }
+    private void OnCutscenePlaying()
+    {
+        isCutscenePlaying = true;
+        StopMovement();
+    }
+    private void OnCutsceneFinished()
+    {
+        isCutscenePlaying = false;
+    }
+    private void StopMovement()
+    {
+        isCutscenePlaying = true;
+        // Stop movement when the cutscene is playing
+        horizInput = 0f;
+        vertInput = 0f;
+        animator.SetFloat("Velocity", 0f);
+        movementAudioSource.Stop();
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isCutscenePlaying)
+        {
             horizInput = Input.GetAxis("Horizontal");
             vertInput = Input.GetAxis("Vertical");
 
-            Vector3 movement = new Vector3(horizInput, 0, vertInput);
-            // ensure diagonal movement doesn't exceed horiz/vert movement speed
-            movement = Vector3.ClampMagnitude(movement, 1.0f);
+            Vector3 movement = new Vector3(horizInput, 0, vertInput).normalized;
             animator.SetFloat("Velocity", movement.magnitude);
 
             if (torch != null && torch.activeSelf)
@@ -51,36 +80,43 @@ public class PlayerController : MonoBehaviour
             }
             // convert from local to global coordinates
             movement = transform.TransformDirection(movement);
+            // Rotate the player to face the movement direction
             if (movement.magnitude > 0)
             {
                 RotateToFaceMovement(movement);
                 RotatePlayerToFaceAwayFromCamera();
-
-                // Check if the audio is not already playing, then play it
-                if (!movementAudioSource.isPlaying)
-                {
-                    movementAudioSource.Play();
-                }
             }
-            else
-            {
-                // Stop the audio when the player is not moving
-                movementAudioSource.Stop();
-            }
-            movement *= speed;
 
-            // calculate yVelocity and add it to the player's movement vector
+            // Calculate movement direction including gravity
+            Vector3 moveDirection = movement * speed + Vector3.up * yVelocity;
+
+            // Apply gravity
             yVelocity += gravity * Time.deltaTime;
 
-            movement.y = yVelocity;
-            movement *= Time.deltaTime; // make all movement processor independent
-                                        // move the player  (using the character controller)
-            player.Move(movement);
-            //Vector3 rotation = Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed;
-            //transform.Rotate(rotation);
+            // Move the player using the CharacterController
+            player.Move(moveDirection * Time.deltaTime);
 
-
+            // Play movement audio if moving
+            if (movement.magnitude > 0 && !movementAudioSource.isPlaying)
+            {
+                movementAudioSource.Play();
+            }
+            // Stop movement audio if not moving
+            else if (movement.magnitude == 0 && movementAudioSource.isPlaying)
+            {
+                movementAudioSource.Stop();
+            }
+        }
+        else
+        {
+            // Stop movement when a cutscene is playing
+            horizInput = 0f;
+            vertInput = 0f;
+            animator.SetFloat("Velocity", 0f);
+            movementAudioSource.Stop();
+        }
     }
+
 
     public void SetTorchGrabbingAnimationPlaying(bool value)
     {

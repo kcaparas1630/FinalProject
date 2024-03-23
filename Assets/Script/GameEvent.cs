@@ -11,4 +11,6 @@ public static class GameEvent
     public const string OPEN_MONSTERCHEST = "OPEN_MONSTERCHEST";
     public const string TORCH_GRAB = "TORCH_GRAB";
     public const string CLOSE_CANVAS = "CLOSE_CANVAS";
+    public const string CUTSCENE_PLAYING = "CUTSCENE_PLAYING";
+    public const string CUTSCENE_FINISHED = "CUTSCENE_FINISHED";
 }
