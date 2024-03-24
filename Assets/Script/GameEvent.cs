@@ -13,4 +13,5 @@ public static class GameEvent
     public const string CLOSE_CANVAS = "CLOSE_CANVAS";
     public const string CUTSCENE_PLAYING = "CUTSCENE_PLAYING";
     public const string CUTSCENE_FINISHED = "CUTSCENE_FINISHED";
+    public const string BASEMENTDOOR_OPEN = "BASEMENTDOOR_OPEN";
 }

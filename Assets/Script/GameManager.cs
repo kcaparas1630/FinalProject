@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     private int GkeysCollected = 0;
     [SerializeField] GameObject gateText;
     [SerializeField] UpdateUIManager ui;
-    public GameObject passageBlock;
  
     private void Awake()
     {
@@ -59,22 +58,12 @@ public class GameManager : MonoBehaviour
         // Check if all tasks are completed
         if (completedTasks >= totalTasks)
         {
-            OpenGate();
-            gateText.SetActive(true);
-            StartCoroutine(DisappearGateText());
+            Messenger.Broadcast(GameEvent.BASEMENTDOOR_OPEN);
         }
  
     }
 
-    private void OpenGate()
-    {
-        // Check if the passageBlock is not null
-        if (passageBlock != null)
-        {
-     
-            Destroy(passageBlock);
-        }
-    }
+  
 
     public void CollectSKey()
     {
@@ -110,14 +99,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No Golden Keys available");
         }
-    }
-    private IEnumerator DisappearGateText()
-    {
-        // Wait for 5 seconds
-        yield return new WaitForSeconds(5.0f);
-
-        // Deactivate gateText
-        gateText.SetActive(false);
     }
 
 }
