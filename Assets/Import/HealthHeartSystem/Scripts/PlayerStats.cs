@@ -2,6 +2,7 @@
  *  Author: ariel oliveira [o.arielg@gmail.com]
  */
 
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     public delegate void OnHealthChangedDelegate();
     public OnHealthChangedDelegate onHealthChangedCallback;
 
-    #region Sigleton
+        #region Sigleton
     private static PlayerStats instance;
     public static PlayerStats Instance
     {
@@ -28,33 +29,35 @@ public class PlayerStats : MonoBehaviour
     private float maxHealth;
     [SerializeField]
     private float maxTotalHealth;
-
+    bool hasTakenDamage = false;
     public float Health { get { return health; } }
     public float MaxHealth { get { return maxHealth; } }
     public float MaxTotalHealth { get { return maxTotalHealth; } }
 
-    public void Heal(float health)
+    private void Awake()
     {
-        this.health += health;
-        ClampHealth();
+        Messenger.AddListener(GameEvent.PLAYER_HIT, TakeDamage);
+    }
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.PLAYER_HIT, TakeDamage);
     }
 
-    public void TakeDamage(float dmg)
+    public void TakeDamage()
     {
-        health -= dmg;
+        health -= 1;
         ClampHealth();
-    }
+        hasTakenDamage = true;
 
-    public void AddHealth()
-    {
-        if (maxHealth < maxTotalHealth)
+        if (hasTakenDamage)
         {
-            maxHealth += 1;
-            health = maxHealth;
+            StartCoroutine(DamageDelay());
+        }
 
-            if (onHealthChangedCallback != null)
-                onHealthChangedCallback.Invoke();
-        }   
+        if(health == 0)
+        {
+            Debug.Break();//Pause Editor; will apply GameOver popup soon
+        }
     }
 
     void ClampHealth()
@@ -63,5 +66,16 @@ public class PlayerStats : MonoBehaviour
 
         if (onHealthChangedCallback != null)
             onHealthChangedCallback.Invoke();
+    }
+
+    IEnumerator DamageDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        // Reset the flag indicating damage has been taken
+        hasTakenDamage = false;
+        // Apply damage again after the delay if necessary
+        health -= 1;
+        ClampHealth();
     }
 }

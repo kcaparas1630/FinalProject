@@ -19,6 +19,7 @@ TagManager:
   - FakeChest
   - ScrollChest
   - GateFinish
+  - Spears
   layers:
   - Default
   - TransparentFX
