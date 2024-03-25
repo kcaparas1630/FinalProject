@@ -36,8 +36,7 @@ public class DoorTimelineController : MonoBehaviour
     {
         // Add your logic here to handle the end of the cutscene
         Debug.Log("Cutscene finished!");
-        // For example, you can resume player control or set the player's position
-
+        Messenger.Broadcast(GameEvent.CUTSCENE_FINISHED);
         // Reset the cutscene playing flag
         cutscenePlaying = false;
         gateOpen.enabled = false;

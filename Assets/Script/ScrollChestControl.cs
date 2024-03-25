@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class ScrollChestControl : MonoBehaviour
 {
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameObject keyText;
-    [SerializeField] private UpdateUIManager ui;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private ScrollPanelPopup scrollPopup;
     [SerializeField] private Animator anim;
     private bool used = false;
@@ -15,15 +16,19 @@ public class ScrollChestControl : MonoBehaviour
         if (other.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (ui.GetKeyCount() < 0) { keyText.SetActive(true); }
-            else { keyText.SetActive(false); }
-            if (Input.GetKey(KeyCode.E) && !used)
-            {
-                used = true;
-                Messenger.Broadcast(GameEvent.OPEN_SCROLLCHEST);
-                anim.SetTrigger("Open");
-                StartCoroutine(GetScroll());
+            if (!gameManager.SKeyValidation()) {
+                keyText.SetActive(true); }
+            else { 
+                keyText.SetActive(false);
+                if (Input.GetKey(KeyCode.E) && !used)
+                {
+                    used = true;
+                    Messenger.Broadcast(GameEvent.OPEN_SCROLLCHEST);
+                    anim.SetTrigger("Open");
+                    StartCoroutine(GetScroll());
+                }
             }
+            
         }
     }
     private void OnTriggerExit(Collider other)

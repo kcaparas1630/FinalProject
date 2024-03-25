@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 public class TimelineController : MonoBehaviour
 {
     [SerializeField] private PlayableDirector timeline;
+    [SerializeField] private TextMeshProUGUI bossName;
+    //[SerializeField] private GameObject keys;
     private bool cutscenePlaying = false;
     private void OnTriggerEnter(Collider other)
     {
@@ -31,9 +34,11 @@ public class TimelineController : MonoBehaviour
     {
         // Add your logic here to handle the end of the cutscene
         Debug.Log("Cutscene finished!");
-        // For example, you can resume player control or set the player's position
-
+        Messenger.Broadcast(GameEvent.CUTSCENE_FINISHED);
         // Reset the cutscene playing flag
         cutscenePlaying = false;
+        bossName.enabled = false;
+        //keys.SetActive(true);
+        Destroy(this.gameObject);
     }
 }

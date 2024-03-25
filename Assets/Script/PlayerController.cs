@@ -36,12 +36,12 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
-        Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutsceneFinished);
+        Messenger.AddListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
-        Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutsceneFinished);
+        Messenger.RemoveListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnCutscenePlaying()
     {

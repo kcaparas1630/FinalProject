@@ -7,28 +7,39 @@ public class ChestControl : MonoBehaviour
 {
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameObject keyText;
-    [SerializeField] private UpdateUIManager ui;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
     private bool used = false;
+
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             interactiveText.SetActive(true);
-            if(ui.GetKeyCount() < 0){ keyText.SetActive(true); }
-            else { keyText.SetActive(false); }
-            if (Input.GetKey(KeyCode.E) && !used)
+
+            // Check if the player has a silver key
+            if (!gameManager.SKeyValidation())
             {
-                used = true;
-                Messenger.Broadcast(GameEvent.OPEN_CHEST);
-                anim.SetTrigger("Open");
-                StartCoroutine(GetGoldenKey());
+                keyText.SetActive(true);
+            }
+            else
+            {
+                keyText.SetActive(false);
+                // If the player presses E and hasn't used the chest yet
+                if (Input.GetKeyDown(KeyCode.E) && !used)
+                {
+                    used = true;
+                    Messenger.Broadcast(GameEvent.OPEN_CHEST);
+                    anim.SetTrigger("Open");
+                    StartCoroutine(GetGoldenKey());
+                }
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             interactiveText.SetActive(false);
         }
@@ -38,6 +49,8 @@ public class ChestControl : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         Messenger.Broadcast(GameEvent.GOLDKEY_PICKUP);
-        Destroy(this.gameObject);
+        Destroy(gameObject); // Destroy the chest object
     }
 }
+
+

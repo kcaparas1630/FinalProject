@@ -6,7 +6,7 @@ public class MonsterChest : MonoBehaviour
 {
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameObject keyText;
-    [SerializeField] private UpdateUIManager ui;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject enemy;
    
@@ -16,15 +16,18 @@ public class MonsterChest : MonoBehaviour
         if (other.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (ui.GetKeyCount() < 0) { keyText.SetActive(true); }
-            else { keyText.SetActive(false); }
-            if (Input.GetKey(KeyCode.E) && !used)
-            {
-                used = true;
-                Messenger.Broadcast(GameEvent.OPEN_MONSTERCHEST);
-                anim.SetTrigger("Open");
-                StartCoroutine(MonsterInstantiate());
+            if (!gameManager.SKeyValidation()) { keyText.SetActive(true); }
+            else { 
+                keyText.SetActive(false);
+                if (Input.GetKey(KeyCode.E) && !used)
+                {
+                    used = true;
+                    Messenger.Broadcast(GameEvent.OPEN_MONSTERCHEST);
+                    anim.SetTrigger("Open");
+                    StartCoroutine(MonsterInstantiate());
+                }
             }
+            
         }
     }
     private void OnTriggerExit(Collider other)
