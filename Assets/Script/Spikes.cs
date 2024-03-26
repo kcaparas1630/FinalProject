@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
+    bool hasTakenDamage = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -12,4 +13,5 @@ public class Spikes : MonoBehaviour
             Messenger.Broadcast(GameEvent.PLAYER_HIT);
         }
     }
+  
 }

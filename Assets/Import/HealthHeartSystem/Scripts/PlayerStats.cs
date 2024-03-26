@@ -2,6 +2,7 @@
  *  Author: ariel oliveira [o.arielg@gmail.com]
  */
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -45,18 +46,16 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage()
     {
-        health -= 1;
-        ClampHealth();
-        hasTakenDamage = true;
-
-        if (hasTakenDamage)
+        
+        StartCoroutine(DamageDelay());
+        if(health == 1)
         {
-            StartCoroutine(DamageDelay());
+            Messenger.Broadcast(GameEvent.PLAYER_INJURED);
         }
-
-        if(health == 0)
+        if (health == 0)
         {
-            Debug.Break();//Pause Editor; will apply GameOver popup soon
+            //Debug.Break();//Pause Editor; will apply GameOver popup soon
+            Messenger.Broadcast(GameEvent.GAME_OVER);
         }
     }
 
@@ -70,12 +69,27 @@ public class PlayerStats : MonoBehaviour
 
     IEnumerator DamageDelay()
     {
-        yield return new WaitForSeconds(3f);
-
-        // Reset the flag indicating damage has been taken
+        ////move this to Coroutine
+        //health -= 1;
+        //ClampHealth();
+        //Debug.Log(health);
+        //yield return new WaitForSeconds(5f);
+        //// Apply damage again after the delay if necessary
+        //hasTakenDamage = true;
+        //yield return new WaitForSeconds(5f);
+        //hasTakenDamage = false;
+        //if(!hasTakenDamage)
+        //{
+        //    health -= 1;
+        //    ClampHealth();
+        //}
+        if(!hasTakenDamage)
+        {
+            health -= 1;
+            ClampHealth();
+            hasTakenDamage = true;
+        }
+        yield return new WaitForSeconds(5f);
         hasTakenDamage = false;
-        // Apply damage again after the delay if necessary
-        health -= 1;
-        ClampHealth();
     }
 }

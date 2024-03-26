@@ -15,4 +15,6 @@ public static class GameEvent
     public const string CUTSCENE_FINISHED = "CUTSCENE_FINISHED";
     public const string BASEMENTDOOR_OPEN = "BASEMENTDOOR_OPEN";
     public const string PLAYER_HIT = "PLAYER_HIT";
+    public const string PLAYER_INJURED = "PLAYER_INJURED";
+    public const string GAME_OVER = "GAME_OVER";
 }

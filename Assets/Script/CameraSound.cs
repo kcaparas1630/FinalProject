@@ -20,12 +20,17 @@ public class CameraSound : MonoBehaviour
     void Awake()
     {
         Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.PLAYER_INJURED, InjuredSound);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.PLAYER_INJURED, InjuredSound);
     }
-
+    private void InjuredSound()
+    {
+        backgroundSound.volume = 0.4f;
+    }
     private void OnCutscenePlaying()
     {
         isCutscenePlaying = true;

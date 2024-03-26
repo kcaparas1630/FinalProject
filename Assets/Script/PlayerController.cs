@@ -19,16 +19,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject torch;
     [SerializeField] private GameObject model;
     [SerializeField] private AudioSource movementAudioSource;
+    //Camera
     [SerializeField] private Camera cam;                // a reference to the main camera
     [SerializeField] private CinemachineFreeLook freeLook; // reference to freeLook Camera
     [SerializeField] private CinemachineVirtualCamera virtualCamera; // a reference to virtual camera.
+    //AUDIOS
+    [SerializeField] private AudioSource damage;
+    [SerializeField] private AudioSource lowHealth;
+    [SerializeField] private AudioSource death;
+    [SerializeField] private AudioClip injured;
     private float rotateToFaceAwayFromCameraSpeed = 5f; // the speed to rotate our Player to align with the camera view.
     private bool isTorchGrabbingAnimationPlaying = false;
     private bool isDoorOpeningAnimationPlaying = false;
     private bool isCutscenePlaying = false;
+    private bool isGameOver = false;
 
     void Start()
     {
+        
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -37,11 +45,46 @@ public class PlayerController : MonoBehaviour
     {
         Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.AddListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
+        Messenger.AddListener(GameEvent.PLAYER_INJURED, TriggerInjuredAnim);
+        Messenger.AddListener(GameEvent.GAME_OVER, GameOverAnim);
+        Messenger.AddListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.RemoveListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
+        Messenger.RemoveListener(GameEvent.PLAYER_INJURED, TriggerInjuredAnim);
+        Messenger.RemoveListener(GameEvent.GAME_OVER, GameOverAnim);
+        Messenger.RemoveListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
+    }
+    private void TriggerInjuredAnim()
+    {
+
+        if (!lowHealth.isPlaying)
+        {
+            lowHealth.Play();
+            movementAudioSource.clip = injured;
+        }
+        animator.SetBool("injured", true);
+        speed = 3f;
+    }
+    private void TriggerHurtAnim()
+    {
+        if (!damage.isPlaying)
+        {
+            damage.Play();
+        }
+        animator.SetTrigger("hurt");
+        
+    }
+    private void GameOverAnim()
+    {
+        isGameOver = true;
+        if (!death.isPlaying)
+        {
+            death.Play();
+        }
+        animator.SetTrigger("gameOver");
     }
     private void OnCutscenePlaying()
     {
@@ -65,7 +108,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isCutscenePlaying)
+        if (!isCutscenePlaying && !isGameOver)
         {
             horizInput = Input.GetAxis("Horizontal");
             vertInput = Input.GetAxis("Vertical");
