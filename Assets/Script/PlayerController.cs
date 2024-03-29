@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (!lowHealth.isPlaying)
         {
+            lowHealth.volume = 3;
             lowHealth.Play();
             movementAudioSource.clip = injured;
         }

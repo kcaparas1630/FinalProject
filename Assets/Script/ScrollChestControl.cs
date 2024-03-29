@@ -36,6 +36,7 @@ public class ScrollChestControl : MonoBehaviour
         if (other.tag == "Player")
         {
             interactiveText.SetActive(false);
+            keyText.SetActive(false);
         }
     }
 

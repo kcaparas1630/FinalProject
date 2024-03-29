@@ -35,6 +35,7 @@ public class MonsterChest : MonoBehaviour
         if (other.tag == "Player")
         {
             interactiveText.SetActive(false);
+            keyText.SetActive(false);
         }
     }
     private IEnumerator MonsterInstantiate()

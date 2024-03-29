@@ -15,6 +15,7 @@ public class KeyPickup : MonoBehaviour
                 Debug.Log("clicked!");
                 Messenger.Broadcast(GameEvent.KEY_PICKUP);
                 this.gameObject.SetActive(false);
+                interactiveText.SetActive(false);
             }
         }
     }

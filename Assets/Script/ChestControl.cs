@@ -42,6 +42,7 @@ public class ChestControl : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactiveText.SetActive(false);
+            keyText.SetActive(false);
         }
     }
 
