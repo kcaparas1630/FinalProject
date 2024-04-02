@@ -6,7 +6,6 @@ public class DoorController : MonoBehaviour
 {
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameObject doorBudgeText;
-    [SerializeField] private GameObject door;
     [SerializeField] private Animator anim;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private AudioSource doorOpen;
