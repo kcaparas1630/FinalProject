@@ -58,6 +58,7 @@ public class Monster : MonoBehaviour
         anim.SetFloat("Velocity",velocityMagnitude);
         if (distanceToTarget <= attackDistance)
         {
+            Debug.Log("EnemyState Attack");
             SetState(EnemyState.Attack);
         }
         else if (distanceToTarget > chaseRange)
@@ -67,16 +68,9 @@ public class Monster : MonoBehaviour
     }
     void Update_Attack()
     {
-        Debug.Log("Attacking Player");
-        anim.SetTrigger("Attack");
+        
         StartCoroutine(AttackCooldown());
-        if (!attackScream.isPlaying)
-        {
-            attackScream.Play();
-        }
-        Vector3 directionToTarget = target.position - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        
         if (distanceToTarget > attackDistance)
         {
             SetState(EnemyState.Chase);
@@ -90,6 +84,14 @@ public class Monster : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         yield return new WaitForSeconds(5f);
+        Vector3 directionToTarget = target.position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        anim.SetTrigger("Attack");
+        if (!attackScream.isPlaying)
+        {
+            attackScream.Play();
+        }
         Messenger.Broadcast(GameEvent.PLAYER_HIT);
     }
     IEnumerator EnemyDead()
