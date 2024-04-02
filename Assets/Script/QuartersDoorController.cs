@@ -9,6 +9,7 @@ public class QuartersDoorController : MonoBehaviour
     [SerializeField] private Animator door2Anim;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private AudioSource doorOpen;
+    private bool isOpen = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +22,23 @@ public class QuartersDoorController : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.E) && !isOpen)
             {
-                interactiveText.SetActive(false);
                 playerAnim.SetTrigger("OpenDoor");
                 door1Anim.SetBool("Open", true);
                 door2Anim.SetBool("Open", true);
+                isOpen = true;
+                if (!doorOpen.isPlaying)
+                {
+                    doorOpen.Play();
+                }
+            }
+            if(Input.GetKey(KeyCode.E) && isOpen)
+            {
+                playerAnim.SetTrigger("OpenDoor");
+                door1Anim.SetBool("Open", false);
+                door2Anim.SetBool("Open", false);
+                isOpen = false;
                 if (!doorOpen.isPlaying)
                 {
                     doorOpen.Play();
@@ -38,12 +50,6 @@ public class QuartersDoorController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            door1Anim.SetBool("Open", false);
-            door2Anim.SetBool("Open", false);
-            if (!doorOpen.isPlaying)
-            {
-                doorOpen.Play();
-            }
             interactiveText.SetActive(false);
         }
     }

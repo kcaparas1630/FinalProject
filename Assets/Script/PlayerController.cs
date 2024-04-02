@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private bool isDoorOpeningAnimationPlaying = false;
     private bool isCutscenePlaying = false;
     private bool isGameOver = false;
-
+    private bool playerIsInjured = false;
     void Start()
     {
         
@@ -65,9 +65,13 @@ public class PlayerController : MonoBehaviour
             lowHealth.volume = 3;
             lowHealth.Play();
             movementAudioSource.clip = injured;
+            if (!movementAudioSource.isPlaying)
+            {
+                movementAudioSource.Play();
+            }
+            speed = 1.5f;
         }
         animator.SetBool("injured", true);
-        speed = 3f;
     }
     private void TriggerHurtAnim()
     {
@@ -114,6 +118,20 @@ public class PlayerController : MonoBehaviour
             horizInput = Input.GetAxis("Horizontal");
             vertInput = Input.GetAxis("Vertical");
 
+            //if (playerIsInjured && movementAudioSource.clip != injured)
+            //{
+            //     Assign the injured clip
+            //    movementAudioSource.clip = injured;
+            //    speed = 1f;
+            //    Debug.Log(speed);
+            //     Play the clip if it's not already playing
+            //    if (!movementAudioSource.isPlaying)
+            //    {
+
+            //        movementAudioSource.Play();
+            //    }
+            //}
+
             Vector3 movement = new Vector3(horizInput, 0, vertInput).normalized;
             animator.SetFloat("Velocity", movement.magnitude);
 
@@ -139,7 +157,6 @@ public class PlayerController : MonoBehaviour
 
             // Move the player using the CharacterController
             player.Move(moveDirection * Time.deltaTime);
-
             // Play movement audio if moving
             if (movement.magnitude > 0 && !movementAudioSource.isPlaying)
             {

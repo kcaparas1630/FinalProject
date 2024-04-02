@@ -9,6 +9,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private AudioSource doorOpen;
+    private bool isOpen = false;
     private void Start()
     {
         interactiveText.SetActive(false);
@@ -34,27 +35,47 @@ public class DoorController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.E))
             {
-                playerAnim.SetTrigger("OpenDoor");
-                anim.SetBool("Open", true);
-                if (!doorOpen.isPlaying)
+                if(!isOpen)
                 {
-                    doorOpen.Play();
+                    playerAnim.SetTrigger("OpenDoor");
+                    anim.SetBool("Open", true);
+                    StartCoroutine(DoorWaitOpen());
+                    if (!doorOpen.isPlaying)
+                    {
+                        doorOpen.Play();
+                    }
                 }
-                interactiveText.SetActive(false);
+                else
+                {
+                    playerAnim.SetTrigger("OpenDoor");
+                    anim.SetBool("Open", false);
+                    StartCoroutine(DoorWaitClose());
+                    if (!doorOpen.isPlaying)
+                    {
+                        doorOpen.Play();
+                    }
+                }
+                
+                
             }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            anim.SetBool("Open", false);
-           
-            if (!doorOpen.isPlaying)
-            {
-                doorOpen.Play();
-            }
             interactiveText.SetActive(false);
         }
+    }
+
+    private IEnumerator DoorWaitOpen()
+    {
+        yield return new WaitForSeconds(2);
+        isOpen = true;
+    }
+    private IEnumerator DoorWaitClose()
+    {
+        yield return new WaitForSeconds(2);
+        isOpen = false;
     }
 }
