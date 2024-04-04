@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("MovingWithTorch", true);
                 animator.SetFloat("Velocity", movement.magnitude);
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    animator.SetTrigger("Attack");
+                }
             }
             // convert from local to global coordinates
             movement = transform.TransformDirection(movement);
