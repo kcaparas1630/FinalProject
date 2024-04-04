@@ -189,6 +189,13 @@ public class PlayerController : MonoBehaviour
         isDoorOpeningAnimationPlaying = value;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Sword"))
+        {
+            Messenger.Broadcast(GameEvent.PLAYER_HIT);
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Staircase") || other.gameObject.CompareTag("Hallway"))

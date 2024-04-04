@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Monster : MonoBehaviour
 {
-
     [SerializeField] private NavMeshAgent agent;    // for moving on the NavMesh
     [SerializeField] private Animator anim;
     [SerializeField] private Transform target;      // the target to follow
@@ -14,7 +13,8 @@ public class Monster : MonoBehaviour
     private float chaseRange = 10f;
     public float attackDistance = 2f;
     private float rotationSpeed = 5f;
-    private enum EnemyState { Idle, Chase , Attack, Dead };
+    private bool hasAttacked = false;
+    private enum EnemyState { Idle, Chase, Attack, Dead };
     private EnemyState state;
 
     private void SetState(EnemyState newState)
@@ -55,10 +55,9 @@ public class Monster : MonoBehaviour
         agent.isStopped = false;                            // start the agent (following)
         agent.SetDestination(target.transform.position);    // follow the target
         float velocityMagnitude = agent.velocity.magnitude;
-        anim.SetFloat("Velocity",velocityMagnitude);
+        anim.SetFloat("Velocity", velocityMagnitude);
         if (distanceToTarget <= attackDistance)
         {
-            Debug.Log("EnemyState Attack");
             SetState(EnemyState.Attack);
         }
         else if (distanceToTarget > chaseRange)
@@ -68,9 +67,12 @@ public class Monster : MonoBehaviour
     }
     void Update_Attack()
     {
-        
-        StartCoroutine(AttackCooldown());
-        
+
+        if(!hasAttacked)
+        {
+            StartCoroutine(AttackCooldown());
+
+        }
         if (distanceToTarget > attackDistance)
         {
             SetState(EnemyState.Chase);
@@ -83,7 +85,7 @@ public class Monster : MonoBehaviour
     }
     IEnumerator AttackCooldown()
     {
-        yield return new WaitForSeconds(5f);
+        hasAttacked = true;
         Vector3 directionToTarget = target.position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -92,6 +94,9 @@ public class Monster : MonoBehaviour
         {
             attackScream.Play();
         }
+        yield return new WaitForSeconds(5f);
+        hasAttacked = false;
+        Debug.Log("attacked");
         Messenger.Broadcast(GameEvent.PLAYER_HIT);
     }
     IEnumerator EnemyDead()
@@ -101,5 +106,5 @@ public class Monster : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
     }
-    
+
 }
