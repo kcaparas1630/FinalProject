@@ -17,4 +17,5 @@ public static class GameEvent
     public const string PLAYER_HIT = "PLAYER_HIT";
     public const string PLAYER_INJURED = "PLAYER_INJURED";
     public const string GAME_OVER = "GAME_OVER";
+    public const string TORCH_WAVE = "TORCHWAVE";
 }

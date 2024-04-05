@@ -22,6 +22,7 @@ TagManager:
   - Spears
   - Waypoints
   - Sword
+  - TorchFire
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - Player
   - BlurVCam
   - Doors
-  - 
+  - Fire
   - 
   - 
   - 

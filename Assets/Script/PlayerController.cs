@@ -139,9 +139,10 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("MovingWithTorch", true);
                 animator.SetFloat("Velocity", movement.magnitude);
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     animator.SetTrigger("Attack");
+                    Messenger.Broadcast(GameEvent.TORCH_WAVE);
                 }
             }
             // convert from local to global coordinates
@@ -197,6 +198,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Sword"))
         {
+            Debug.Log("Sword Hit");
             Messenger.Broadcast(GameEvent.PLAYER_HIT);
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyAttackState : EnemyStateMachineBehaviour
 {
@@ -18,9 +19,14 @@ public class EnemyAttackState : EnemyStateMachineBehaviour
         directionToPlayer.y = 0f;
         // Rotate the enemy to face the player's position
         enemy.transform.rotation = Quaternion.LookRotation(directionToPlayer);
-        if (enemy.GetDistanceFromPlayer() > enemy.AttackRangeStop)
+        if (enemy.GetDistanceFromPlayer() > enemy.AttackRangeStop && !enemy.hasCollidedWithFire)
         {
             animator.SetTrigger("Chase");
+        }
+        else if (enemy.hasCollidedWithFire)
+        {
+            animator.SetTrigger("Duck");
+            enemy.hasCollidedWithFire = false;
         }
     }
 }

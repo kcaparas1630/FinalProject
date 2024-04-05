@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPatrolState : EnemyStateMachineBehaviour
+public class EnemyScaredState : EnemyStateMachineBehaviour
 {
+    
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        enemy.DetermineNextWaypoint();
-        enemy.Agent.SetDestination(enemy.GetCurrentWaypoint());
+        enemy.Agent.SetDestination(enemy.transform.position);
     }
-
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(enemy.Agent.remainingDistance <= enemy.Agent.stoppingDistance)
+        if(enemy.GetDistanceFromPlayer() < enemy.AttackRange && !enemy.hasCollidedWithFire)
         {
-            animator.SetTrigger("Idle");
+            Debug.Log("Attack");
+            animator.SetTrigger("Attack");
         }
-        else if (enemy.GetDistanceFromPlayer() < enemy.ChaseRange)
+        else if(enemy.GetDistanceFromPlayer() > enemy.AttackRangeStop && !enemy.hasCollidedWithFire)
         {
+            Debug.Log("Chase");
             animator.SetTrigger("Chase");
         }
     }
+    
 }
