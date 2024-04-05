@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
         Messenger.AddListener(GameEvent.TORCH_GRAB, CompleteTask);
         Messenger.AddListener(GameEvent.CLOSE_CANVAS, CompleteTask);
+        Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
     }
     private void OnDestroy()
     {
@@ -40,9 +41,14 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener(GameEvent.OPEN_MONSTERCHEST, UseSKey);
         Messenger.RemoveListener(GameEvent.TORCH_GRAB, CompleteTask);
         Messenger.RemoveListener(GameEvent.CLOSE_CANVAS, CompleteTask);
+        Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
 
     }
 
+    private void OnTorchWave()
+    {
+        Debug.Log("Do nothing");
+    }
     private void Start()
     {
         // Find all tasks

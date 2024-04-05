@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 public class Enemy : MonoBehaviour
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     private int waypointIndex = 0;                              // current waypoint index
     public float rotationSpeed { get; private set; } = 5.0f;
     public bool hasCollidedWithFire { get; set; } = false;
+    public bool playerUnderBed { get; set; } = false;
     public GameObject Player { get; private set; }
     public NavMeshAgent Agent { get; private set; }
     // Start is called before the first frame update
@@ -32,16 +34,27 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.AddListener(GameEvent.QUARTERS_CUTSCENE_PLAYING, OnQuartersCutscenePlaying);
+        Messenger.AddListener(GameEvent.QUARTERS_CUTSCENE_FINISHED, OnQuartersCutsceneFinished);
+        Messenger.AddListener(GameEvent.UNDER_BED, OnUnderBed);
+        Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.RemoveListener(GameEvent.QUARTERS_CUTSCENE_PLAYING, OnQuartersCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.QUARTERS_CUTSCENE_FINISHED, OnQuartersCutsceneFinished);
+        Messenger.RemoveListener(GameEvent.UNDER_BED, OnUnderBed);
+        Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnUnderBed()
     {
-        
+        playerUnderBed = true;
+    }
+    private void OnExitBed()
+    {
+        playerUnderBed = false;
     }
 
     public void DetermineNextWaypoint()
@@ -71,12 +84,24 @@ public class Enemy : MonoBehaviour
         }
         
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("TorchFire"))
-    //    {
-    //        Debug.Log("Collided with Fire");
-    //        hasCollidedWithFire = true;
-    //    }
-    //}
+    IEnumerator ChangeStateCooldown()
+    {
+        yield return new WaitForSeconds(5f);
+        hasCollidedWithFire = false;
+    }
+
+    // Method to invoke the coroutine from outside
+    public void StartCooldownCoroutine()
+    {
+        StartCoroutine(ChangeStateCooldown());
+    }
+    
+    private void OnQuartersCutscenePlaying()
+    {
+        Agent.enabled = false;
+    }
+    private void OnQuartersCutsceneFinished()
+    {
+        Agent.enabled = true;
+    }
 }

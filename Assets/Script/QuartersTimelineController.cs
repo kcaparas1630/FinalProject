@@ -13,7 +13,7 @@ public class QuartersTimelineController : MonoBehaviour
         {
             // Play the timeline when the player enters the collider
             timeline.Play();
-            Messenger.Broadcast(GameEvent.CUTSCENE_PLAYING);
+            Messenger.Broadcast(GameEvent.QUARTERS_CUTSCENE_PLAYING);
             cutscenePlaying = true;
         }
     }
@@ -31,7 +31,7 @@ public class QuartersTimelineController : MonoBehaviour
     {
         // Add your logic here to handle the end of the cutscene
         Debug.Log("Cutscene finished!");
-        Messenger.Broadcast(GameEvent.CUTSCENE_FINISHED);
+        Messenger.Broadcast(GameEvent.QUARTERS_CUTSCENE_FINISHED);
         // Reset the cutscene playing flag
         cutscenePlaying = false;
         Destroy(this.gameObject);

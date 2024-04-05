@@ -14,7 +14,11 @@ public class EnemyChaseState : EnemyStateMachineBehaviour
         if (enemy.hasCollidedWithFire)
         {
             animator.SetTrigger("Duck");
-            enemy.hasCollidedWithFire = false;
+            enemy.StartCooldownCoroutine();
+        }
+        if (enemy.playerUnderBed)
+        {
+            animator.SetTrigger("Patrol");
         }
     }
 }

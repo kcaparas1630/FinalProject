@@ -23,10 +23,16 @@ public class EnemyAttackState : EnemyStateMachineBehaviour
         {
             animator.SetTrigger("Chase");
         }
-        else if (enemy.hasCollidedWithFire)
+        if (enemy.hasCollidedWithFire)
         {
             animator.SetTrigger("Duck");
-            enemy.hasCollidedWithFire = false;
+            enemy.StartCooldownCoroutine();
+        }
+        if (enemy.playerUnderBed)
+        {
+            animator.SetTrigger("Patrol");
         }
     }
+
+    
 }

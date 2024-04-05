@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Playables;
+
+public class LeverSwitch : MonoBehaviour
+{
+    [SerializeField] private GameObject interactiveText;
+    [SerializeField] private Animator leverAnim;
+    [SerializeField] private PlayableDirector timeline;
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            interactiveText.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                leverAnim.SetTrigger("Down");
+                interactiveText.SetActive(false);
+                StartCoroutine(leverTimelineStart());
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            interactiveText.SetActive(false);
+        }
+    }
+
+    IEnumerator leverTimelineStart()
+    {
+        yield return new WaitForSeconds(2f);
+        timeline.Play();
+    }
+}

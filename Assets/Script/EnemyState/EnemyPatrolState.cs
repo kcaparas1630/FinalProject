@@ -17,7 +17,7 @@ public class EnemyPatrolState : EnemyStateMachineBehaviour
         {
             animator.SetTrigger("Idle");
         }
-        else if (enemy.GetDistanceFromPlayer() < enemy.ChaseRange)
+        if (enemy.GetDistanceFromPlayer() < enemy.ChaseRange && !enemy.playerUnderBed)
         {
             animator.SetTrigger("Chase");
         }

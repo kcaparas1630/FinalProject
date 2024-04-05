@@ -13,9 +13,13 @@ public static class GameEvent
     public const string CLOSE_CANVAS = "CLOSE_CANVAS";
     public const string CUTSCENE_PLAYING = "CUTSCENE_PLAYING";
     public const string CUTSCENE_FINISHED = "CUTSCENE_FINISHED";
+    public const string QUARTERS_CUTSCENE_PLAYING = "QUARTERS_CUTSCENE_PLAYING";
+    public const string QUARTERS_CUTSCENE_FINISHED = "QUARTERS_CUTSCENE_FINISHED";
     public const string BASEMENTDOOR_OPEN = "BASEMENTDOOR_OPEN";
     public const string PLAYER_HIT = "PLAYER_HIT";
     public const string PLAYER_INJURED = "PLAYER_INJURED";
     public const string GAME_OVER = "GAME_OVER";
-    public const string TORCH_WAVE = "TORCHWAVE";
+    public const string TORCH_WAVE = "TORCH_WAVE";
+    public const string UNDER_BED = "UNDER_BED";
+    public const string EXIT_BED = "EXIT_BED";
 }

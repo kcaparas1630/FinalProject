@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private bool isCutscenePlaying = false;
     private bool isGameOver = false;
     private bool playerIsInjured = false;
+    private bool underBed = false;
+    private bool hasTorchWaved = false;
     void Start()
     {
         
@@ -44,18 +46,39 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.QUARTERS_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.QUARTERS_CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.AddListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.AddListener(GameEvent.PLAYER_INJURED, TriggerInjuredAnim);
         Messenger.AddListener(GameEvent.GAME_OVER, GameOverAnim);
         Messenger.AddListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
+        Messenger.AddListener(GameEvent.UNDER_BED, OnUnderBed);
+        Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.RemoveListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
+        Messenger.RemoveListener(GameEvent.QUARTERS_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.QUARTERS_CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.RemoveListener(GameEvent.PLAYER_INJURED, TriggerInjuredAnim);
         Messenger.RemoveListener(GameEvent.GAME_OVER, GameOverAnim);
         Messenger.RemoveListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
+        Messenger.RemoveListener(GameEvent.UNDER_BED, OnUnderBed);
+        Messenger.RemoveListener(GameEvent.EXIT_BED, OnExitBed);
+    }
+    private void OnExitBed()
+    {
+        underBed = false;
+    }
+    private void OnUnderBed()
+    {
+        StartCoroutine(exitBedRestriction());
+    }
+    IEnumerator exitBedRestriction()
+    {
+        yield return new WaitForSeconds(2f);
+        underBed = true;
     }
     private void TriggerInjuredAnim()
     {
@@ -109,28 +132,18 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Velocity", 0f);
         movementAudioSource.Stop();
     }
-
+    IEnumerator hasTorchWavedCooldown()
+    {
+        yield return new WaitForSeconds(3f);
+        hasTorchWaved = false;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (!isCutscenePlaying && !isGameOver)
+        if (!isCutscenePlaying && !isGameOver && !underBed)
         {
             horizInput = Input.GetAxis("Horizontal");
             vertInput = Input.GetAxis("Vertical");
-
-            //if (playerIsInjured && movementAudioSource.clip != injured)
-            //{
-            //     Assign the injured clip
-            //    movementAudioSource.clip = injured;
-            //    speed = 1f;
-            //    Debug.Log(speed);
-            //     Play the clip if it's not already playing
-            //    if (!movementAudioSource.isPlaying)
-            //    {
-
-            //        movementAudioSource.Play();
-            //    }
-            //}
 
             Vector3 movement = new Vector3(horizInput, 0, vertInput).normalized;
             animator.SetFloat("Velocity", movement.magnitude);
@@ -139,10 +152,12 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("MovingWithTorch", true);
                 animator.SetFloat("Velocity", movement.magnitude);
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && !hasTorchWaved)
                 {
+                    hasTorchWaved = true;
                     animator.SetTrigger("Attack");
                     Messenger.Broadcast(GameEvent.TORCH_WAVE);
+                    StartCoroutine(hasTorchWavedCooldown());
                 }
             }
             // convert from local to global coordinates

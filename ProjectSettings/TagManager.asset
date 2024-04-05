@@ -23,6 +23,7 @@ TagManager:
   - Waypoints
   - Sword
   - TorchFire
+  - Bed
   layers:
   - Default
   - TransparentFX
