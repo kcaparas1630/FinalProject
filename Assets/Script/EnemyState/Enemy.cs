@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public float IdleTime { get; private set; } = 3.0f;         // time to spend in idle state
+    public float AttackCooldownTime { get; private set; } = 2.5f; // time to spend in cooldown
     public float ChaseRange { get; private set; } = 7.0f;
     public float AttackRange { get; private set; } = 3.0f;      // when player is closer than this, attack
     public float AttackRangeStop { get; private set; } = 7.0f; // when player is farther than this, chase
@@ -14,8 +15,11 @@ public class Enemy : MonoBehaviour
     public float rotationSpeed { get; private set; } = 5.0f;
     public bool hasCollidedWithFire { get; set; } = false;
     public bool playerUnderBed { get; set; } = false;
+    public bool hasAttacked { get; set; } = true;
     public GameObject Player { get; private set; }
     public NavMeshAgent Agent { get; private set; }
+
+    [SerializeField] private AudioSource attackSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +52,24 @@ public class Enemy : MonoBehaviour
         Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
     }
 
+    //public void isCooldownFinish()
+    //{
+    //    StartCoroutine(AttackCountdown());
+       
+    //}
+    //IEnumerator AttackCountdown()
+    //{
+    //    yield return new WaitForSeconds(2.5f);
+    //    hasAttacked = false;
+     
+    //}
+    public void playAttackSound()
+    {
+        if(!attackSound.isPlaying)
+        {
+            attackSound.Play();
+        }
+    }
     private void OnUnderBed()
     {
         playerUnderBed = true;

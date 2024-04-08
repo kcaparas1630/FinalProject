@@ -12,6 +12,7 @@ public class EnemyScaredState : EnemyStateMachineBehaviour
     }
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        enemy.StartCooldownCoroutine();
         if(enemy.GetDistanceFromPlayer() < enemy.AttackRange && !enemy.hasCollidedWithFire)
         {
             Debug.Log("Attack");

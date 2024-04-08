@@ -14,4 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CastleFloors.unity
     guid: 5c1f6de42d44ba647b5e048f618a4f11
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: e525533a92495324889f832a267cfe06, type: 2}
