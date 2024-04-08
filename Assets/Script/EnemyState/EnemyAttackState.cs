@@ -19,7 +19,7 @@ public class EnemyAttackState : EnemyStateMachineBehaviour
         // Get the direction to the player
         Vector3 directionToPlayer = enemy.Player.transform.position - enemy.transform.position;
         // Project the direction onto the X-Z plane
-        directionToPlayer.y = 0f;
+        directionToPlayer.y = 20f;
         // Rotate the enemy to face the player's position
         enemy.transform.rotation = Quaternion.LookRotation(directionToPlayer);
         timer += Time.deltaTime;

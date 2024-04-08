@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,9 @@ public class WalkthroughController : MonoBehaviour
     [SerializeField] private GameObject movementKeyText;
     [SerializeField] private GameObject interactionKeyText;
     [SerializeField] private GameObject torchWaveKeyText;
+    [SerializeField] private GameObject followText;
     [SerializeField] private List<GameObject> walkthroughCircles = new List<GameObject>();
-
+    [SerializeField] private CinemachineVirtualCamera basementVirtualCamera;
     private void Start()
     {
         StartCoroutine(textShow());
@@ -17,13 +19,27 @@ public class WalkthroughController : MonoBehaviour
     {
         Messenger.AddListener(GameEvent.OPEN_CANVAS, OnOpenCanvas);
         Messenger.AddListener(GameEvent.WALKTHROUGH_CIRCLE, OnWalkthroughCircle);
+        Messenger.AddListener(GameEvent.TORCH_GRAB, OnTorchGrab);
+        Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.OPEN_CANVAS, OnOpenCanvas);
         Messenger.RemoveListener(GameEvent.WALKTHROUGH_CIRCLE, OnWalkthroughCircle);
+        Messenger.RemoveListener(GameEvent.TORCH_GRAB, OnTorchGrab);
+        Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
     }
-
+    private void OnTorchWave()
+    {
+        torchWaveKeyText.SetActive(false);
+        StartCoroutine(destroyGameObject());
+        basementVirtualCamera.enabled = false; // brute force disable
+    }
+    private void OnTorchGrab()
+    {
+        followText.SetActive(false);
+        StartCoroutine(torchWaveTextShow());
+    }
     private void OnWalkthroughCircle()
     {
         movementKeyText.SetActive(false);
@@ -37,12 +53,23 @@ public class WalkthroughController : MonoBehaviour
         {
             circle.SetActive(true);
         }
+        followText.SetActive(true);
     }
   
     IEnumerator textShow()
     {
         yield return new WaitForSeconds(3.5f);
         movementKeyText.SetActive(true);
+    }
+    IEnumerator torchWaveTextShow()
+    {
+        yield return new WaitForSeconds(10f);
+        torchWaveKeyText.SetActive(true); // reason: it will show on cutscene
+    }
+    IEnumerator destroyGameObject()
+    {
+        yield return new WaitForSeconds(1.3F);
+        Destroy(this.gameObject);
     }
   
 }

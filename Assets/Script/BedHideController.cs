@@ -26,7 +26,7 @@ public class BedHideController : MonoBehaviour
                 playerAnim.SetTrigger("Unhide");
                 playerModel.SetActive(true);
                 torch.SetActive(true);
-                isUnderBed = false;
+                StartCoroutine(cooldownHideAnimation());
                 interactiveText.SetActive(true);
                 Messenger.Broadcast(GameEvent.EXIT_BED);
             }
@@ -38,6 +38,11 @@ public class BedHideController : MonoBehaviour
         playerModel.SetActive(false);
         torch.SetActive(false);
         isUnderBed = true;
+    }
+    IEnumerator cooldownHideAnimation()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isUnderBed = false;
     }
     private void OnTriggerExit(Collider other)
     {

@@ -8,7 +8,6 @@ public class MagicCircleController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Messenger.Broadcast(GameEvent.WALKTHROUGH_CIRCLE);
             StartCoroutine(destroyCircle());
         }
     }

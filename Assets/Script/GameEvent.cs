@@ -24,4 +24,6 @@ public static class GameEvent
     public const string UNDER_BED = "UNDER_BED";
     public const string EXIT_BED = "EXIT_BED";
     public const string WALKTHROUGH_CIRCLE = "WALKTHROUGH_CIRCLE";
+    public const string DESTROY_BASEMENTDOOR = "DESTROY_BASEMENTDOOR";
+
 }
