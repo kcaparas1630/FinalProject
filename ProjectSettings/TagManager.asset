@@ -24,6 +24,8 @@ TagManager:
   - Sword
   - TorchFire
   - Bed
+  - WalkthroughCircle
+  - walkthroughpt2
   layers:
   - Default
   - TransparentFX

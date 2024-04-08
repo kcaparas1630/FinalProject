@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private bool isDoorOpeningAnimationPlaying = false;
     private bool isCutscenePlaying = false;
     private bool isGameOver = false;
-    private bool playerIsInjured = false;
     private bool underBed = false;
     private bool hasTorchWaved = false;
     void Start()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    bool hasTakenDamage = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

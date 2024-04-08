@@ -10,6 +10,7 @@ public static class GameEvent
     public const string OPEN_SCROLLCHEST = "OPEN_SCROLLCHEST";
     public const string OPEN_MONSTERCHEST = "OPEN_MONSTERCHEST";
     public const string TORCH_GRAB = "TORCH_GRAB";
+    public const string OPEN_CANVAS = "OPEN_CANVAS";
     public const string CLOSE_CANVAS = "CLOSE_CANVAS";
     public const string CUTSCENE_PLAYING = "CUTSCENE_PLAYING";
     public const string CUTSCENE_FINISHED = "CUTSCENE_FINISHED";
@@ -22,4 +23,5 @@ public static class GameEvent
     public const string TORCH_WAVE = "TORCH_WAVE";
     public const string UNDER_BED = "UNDER_BED";
     public const string EXIT_BED = "EXIT_BED";
+    public const string WALKTHROUGH_CIRCLE = "WALKTHROUGH_CIRCLE";
 }

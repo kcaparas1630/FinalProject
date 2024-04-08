@@ -14,7 +14,7 @@ public class LeverSwitch : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             interactiveText.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 leverAnim.SetTrigger("Down");
                 interactiveText.SetActive(false);

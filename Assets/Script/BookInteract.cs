@@ -7,6 +7,7 @@ public class BookInteract : MonoBehaviour
     [SerializeField] private GameObject bookCanvas;
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameObject exclamationMark;
+    private bool isTaskCompleted = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,11 @@ public class BookInteract : MonoBehaviour
     {
         exclamationMark.SetActive(false);
         bookCanvas.SetActive(false);
-        Messenger.Broadcast(GameEvent.CLOSE_CANVAS);
+        if (!isTaskCompleted) // Check if the task is not already completed
+        {
+            isTaskCompleted = true; // Set the task as completed
+            Messenger.Broadcast(GameEvent.CLOSE_CANVAS);
+        }
     }
     public void Pause()
     {
@@ -34,11 +39,11 @@ public class BookInteract : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             interactiveText.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 bookCanvas.SetActive(true);
                 interactiveText.SetActive(false);
+                Messenger.Broadcast(GameEvent.OPEN_CANVAS);
                 //Pause(); Find a way to pause but continue canvas
             }
         }
@@ -48,4 +53,5 @@ public class BookInteract : MonoBehaviour
     {
         interactiveText.SetActive(false);
     }
+
 }

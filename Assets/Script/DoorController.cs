@@ -23,7 +23,7 @@ public class DoorController : MonoBehaviour
             interactiveText.SetActive(true);
             if (this.gameObject.CompareTag("GateFinish"))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKey(KeyCode.E))
                 {
                     //Change this into coroutine and grab a open door animation.
                     doorBudgeText.SetActive(true);
@@ -33,7 +33,7 @@ public class DoorController : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 if(!isOpen)
                 {
