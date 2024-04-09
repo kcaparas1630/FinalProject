@@ -9,6 +9,8 @@ public class WalkthroughController : MonoBehaviour
     [SerializeField] private GameObject interactionKeyText;
     [SerializeField] private GameObject torchWaveKeyText;
     [SerializeField] private GameObject followText;
+    [SerializeField] private GameObject pauseText;
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private List<GameObject> walkthroughCircles = new List<GameObject>();
     [SerializeField] private CinemachineVirtualCamera basementVirtualCamera;
     private void Start()
@@ -17,10 +19,12 @@ public class WalkthroughController : MonoBehaviour
     }
     private void Awake()
     {
+        Debug.Log("WalkthroughController Awake");
         Messenger.AddListener(GameEvent.OPEN_CANVAS, OnOpenCanvas);
         Messenger.AddListener(GameEvent.WALKTHROUGH_CIRCLE, OnWalkthroughCircle);
         Messenger.AddListener(GameEvent.TORCH_GRAB, OnTorchGrab);
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.AddListener(GameEvent.PAUSE_GAME, OnPauseGame);
     }
     private void OnDestroy()
     {
@@ -28,12 +32,18 @@ public class WalkthroughController : MonoBehaviour
         Messenger.RemoveListener(GameEvent.WALKTHROUGH_CIRCLE, OnWalkthroughCircle);
         Messenger.RemoveListener(GameEvent.TORCH_GRAB, OnTorchGrab);
         Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.RemoveListener(GameEvent.PAUSE_GAME, OnPauseGame);
+    }
+    public void OnPauseGame()
+    {
+        pauseText.SetActive(false);
+        StartCoroutine(destroyGameObject());
+        basementVirtualCamera.enabled = false; // brute force disable
     }
     private void OnTorchWave()
     {
         torchWaveKeyText.SetActive(false);
-        StartCoroutine(destroyGameObject());
-        basementVirtualCamera.enabled = false; // brute force disable
+        pauseText.SetActive(true);
     }
     private void OnTorchGrab()
     {

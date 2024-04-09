@@ -54,7 +54,7 @@ public class PlayerStats : MonoBehaviour
         }
         if (health == 0)
         {
-            //Debug.Break();//Pause Editor; will apply GameOver popup soon
+            Debug.Log("GameOver");
             Messenger.Broadcast(GameEvent.GAME_OVER);
         }
     }

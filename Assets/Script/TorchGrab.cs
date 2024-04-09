@@ -17,37 +17,7 @@ public class TorchGrab : MonoBehaviour
         torchOnPlayer.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TurnOffTorch();
-        }
-        
-    }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Player")
-    //    {
-    //        interactiveText.SetActive(true);
-    //        if (Input.GetKey(KeyCode.E) && !isCoroutineRunning)
-    //        {
-
-    //            StartCoroutine(GrabTorchWithDelay());
-    //            if (gameManager != null)
-    //            {
-    //                Transform exclamationMark = transform.Find("Exclamation_Yellow");
-
-    //                if (exclamationMark != null)
-    //                {
-
-    //                    gameManager.CompleteTask(exclamationMark.gameObject);
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+   
     private void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "Player")
@@ -90,10 +60,6 @@ public class TorchGrab : MonoBehaviour
         isCoroutineRunning = false;
     }
 
-    private void TurnOffTorch()
-    {
-        // Turn off the torch light on the player
-        torchOnPlayer.SetActive(false);
-    }
+    
 }
 

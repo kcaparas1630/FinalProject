@@ -25,5 +25,6 @@ public class CauldronGoldKeyPickup : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         Messenger.Broadcast(GameEvent.GOLDKEY_PICKUP);
+        Messenger.Broadcast(GameEvent.FINAL_EVENT);
     }
 }

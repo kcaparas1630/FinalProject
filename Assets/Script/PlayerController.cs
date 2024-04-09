@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController player;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject torch;
+    [SerializeField] private GameObject sword;
     [SerializeField] private GameObject model;
     [SerializeField] private AudioSource movementAudioSource;
     //Camera
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         Messenger.AddListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
         Messenger.AddListener(GameEvent.UNDER_BED, OnUnderBed);
         Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
+        Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
     }
     private void OnDestroy()
     {
@@ -65,6 +67,11 @@ public class PlayerController : MonoBehaviour
         Messenger.RemoveListener(GameEvent.PLAYER_HIT, TriggerHurtAnim);
         Messenger.RemoveListener(GameEvent.UNDER_BED, OnUnderBed);
         Messenger.RemoveListener(GameEvent.EXIT_BED, OnExitBed);
+        Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
+    }
+    private void OnGameOver()
+    {
+        lowHealth.Stop();
     }
     private void OnExitBed()
     {
@@ -157,6 +164,15 @@ public class PlayerController : MonoBehaviour
                     animator.SetTrigger("Attack");
                     Messenger.Broadcast(GameEvent.TORCH_WAVE);
                     StartCoroutine(hasTorchWavedCooldown());
+                }
+            }
+            if(sword != null && sword.activeSelf)
+            {
+                torch.SetActive(false);
+                animator.SetBool("MovingWithSword", true);
+                animator.SetFloat("Velocity", movement.magnitude);
+                if (Input.GetKeyDown(KeyCode.Space)){
+                    animator.SetTrigger("SwordAttack");
                 }
             }
             // convert from local to global coordinates

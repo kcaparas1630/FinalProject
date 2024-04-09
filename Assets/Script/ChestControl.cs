@@ -29,6 +29,8 @@ public class ChestControl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E) && !used)
                 {
                     used = true;
+                    keyText.SetActive(false);
+                    interactiveText.SetActive(false);
                     Messenger.Broadcast(GameEvent.OPEN_CHEST);
                     anim.SetTrigger("Open");
                     StartCoroutine(GetGoldenKey());

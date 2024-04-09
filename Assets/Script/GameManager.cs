@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private int GkeysCollected = 0;
     [SerializeField] GameObject gateText;
     [SerializeField] UpdateUIManager ui;
+    [SerializeField] GameObject finalEventTrigger;
  
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener(GameEvent.TORCH_GRAB, CompleteTask);
         Messenger.AddListener(GameEvent.CLOSE_CANVAS, CompleteTask);
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.AddListener(GameEvent.FINAL_EVENT, OnFinalEvent);
     }
     private void OnDestroy()
     {
@@ -42,9 +44,13 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener(GameEvent.TORCH_GRAB, CompleteTask);
         Messenger.RemoveListener(GameEvent.CLOSE_CANVAS, CompleteTask);
         Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
+        Messenger.RemoveListener(GameEvent.FINAL_EVENT, OnFinalEvent);
 
     }
-
+    private void OnFinalEvent()
+    {
+        finalEventTrigger.SetActive(true);
+    }
     private void OnTorchWave()
     {
         Debug.Log("Do nothing");

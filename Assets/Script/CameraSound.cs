@@ -14,24 +14,19 @@ public class CameraSound : MonoBehaviour
         Messenger.AddListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.AddListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.AddListener(GameEvent.PLAYER_INJURED, InjuredSound);
+        Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.RemoveListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.RemoveListener(GameEvent.PLAYER_INJURED, InjuredSound);
+        Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
     }
-    //private void Update()
-    //{
-    //    if (!isCutscenePlaying)
-    //    {
-    //        backgroundSound.Play();
-    //    }
-    //    else
-    //    {
-    //        OnCutscenePlaying();
-    //    }
-    //}
+    private void OnGameOver()
+    {
+        backgroundSound.Stop();
+    }
     private void InjuredSound()
     {
         backgroundSound.volume = 0.4f;
