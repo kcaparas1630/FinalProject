@@ -7,15 +7,15 @@ public class FinalTimelineTrigger : MonoBehaviour
 {
     [SerializeField] private PlayableDirector timeline;
     private bool cutscenePlaying = false;
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        if (!cutscenePlaying)
+        if (other.CompareTag("Player")) // Change the tag as per your requirements
         {
+            // Play the timeline when the player enters the collider
             timeline.Play();
             Messenger.Broadcast(GameEvent.BOSS_CUTSCENE_PLAYING);
             cutscenePlaying = true;
         }
-        
     }
 
     private void Update()

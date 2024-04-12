@@ -13,6 +13,7 @@ public class DragonFlyChaseState : DragonStateMachineBehaviour
     {
      
         dragon.Agent.baseOffset = -2f;
+
         dragon.Agent.SetDestination(dragon.Player.transform.position);
         if (dragon.isDead)
         {

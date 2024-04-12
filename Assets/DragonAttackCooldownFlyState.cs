@@ -8,7 +8,11 @@ public class DragonAttackCooldownFlyState : DragonStateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        dragon.Agent.SetDestination(dragon.transform.position);
+        if (dragon.shouldFollowPlayer)
+        {
+            dragon.Agent.SetDestination(dragon.transform.position);
+        }
+       
         timer = 0;
     }
 

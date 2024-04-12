@@ -9,10 +9,9 @@ public class DragonClawAttackState : DragonStateMachineBehaviour
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         // Only set the destination if shouldFollowPlayer is true
-        if (dragon.shouldFollowPlayer)
-        {
+      
             dragon.Agent.SetDestination(dragon.Player.transform.position);
-        }
+        
         timer = 0;
     }
 

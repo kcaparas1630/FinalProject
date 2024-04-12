@@ -24,7 +24,7 @@ public class Dragon : MonoBehaviour
     public MovementMode movementMode = MovementMode.OnFoot;
     public enum AttackMode { MouthAttack,ClawAttack,FlameAttack};
     public AttackMode attackMode = AttackMode.MouthAttack;
-    public bool shouldFollowPlayer = true;
+    public bool shouldFollowPlayer = false;
     public bool isSwitch = false;
     public bool isDead = false;
     private void Start()
@@ -143,10 +143,14 @@ public class Dragon : MonoBehaviour
     private void OnBossCutscenePlaying()
     {
         Agent.enabled = false;
+        Agent.isStopped = true;
+        shouldFollowPlayer = false;
     }
     private void OnBossCutsceneFinished()
     {
         Agent.enabled = true;
+        Agent.isStopped = false;
+        shouldFollowPlayer = true;
     }
     //public bool IsPlayerWithinNavMeshBounds()
     //{
