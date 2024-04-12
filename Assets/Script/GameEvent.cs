@@ -27,4 +27,9 @@ public static class GameEvent
     public const string DESTROY_BASEMENTDOOR = "DESTROY_BASEMENTDOOR";
     public const string PAUSE_GAME = "PAUSE_GAME";
     public const string FINAL_EVENT = "FINAL_EVENT";
+    public const string BOSSHEALTH_REDUCE = "BOSSHEALTH_REDUCE";
+    public const string BOSS_DEATH = "BOSS_DEATH";
+    public const string CRYSTAL_APPEAR = "CRYSTAL_APPEAR";
+    public const string BOSS_CUTSCENE_PLAYING = "BOSS_CUTSCENE_PLAYING";
+    public const string BOSS_CUTSCENE_FINISHED = "BOSS_CUTSCENE_FINISHED";
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class GameManager : MonoBehaviour
     private int completedTasks = 0;
     private int SkeysCollected = 0;
     private int GkeysCollected = 0;
+    private int crystalsDestroyed = 0;
+    private int MAXCRYSTALS = 4;
     [SerializeField] GameObject gateText;
     [SerializeField] UpdateUIManager ui;
     [SerializeField] GameObject finalEventTrigger;
- 
+    [SerializeField] GameObject finalCrystal;
+    [SerializeField] AudioSource dragonHurt;
+    [SerializeField] PlayableDirector finalCutscene;
     private void Awake()
     {
         // Ensure there's only one instance of the GameManager
@@ -33,6 +38,8 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener(GameEvent.CLOSE_CANVAS, CompleteTask);
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
         Messenger.AddListener(GameEvent.FINAL_EVENT, OnFinalEvent);
+        Messenger.AddListener(GameEvent.BOSSHEALTH_REDUCE, OnBossHealthReduce);
+        
     }
     private void OnDestroy()
     {
@@ -45,7 +52,22 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener(GameEvent.CLOSE_CANVAS, CompleteTask);
         Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
         Messenger.RemoveListener(GameEvent.FINAL_EVENT, OnFinalEvent);
+        Messenger.RemoveListener(GameEvent.BOSSHEALTH_REDUCE, OnBossHealthReduce);
 
+    }
+    private void OnBossHealthReduce()
+    {
+        crystalsDestroyed++;
+        dragonHurt.Play();
+        Debug.Log(crystalsDestroyed);
+        if (crystalsDestroyed == 3)
+        {
+            finalCrystal.SetActive(true);
+        }
+        if (crystalsDestroyed == MAXCRYSTALS) {
+            Messenger.Broadcast(GameEvent.BOSS_DEATH);
+            finalCutscene.Play();
+        }
     }
     private void OnFinalEvent()
     {

@@ -26,6 +26,12 @@ TagManager:
   - Bed
   - WalkthroughCircle
   - walkthroughpt2
+  - Waypoints2
+  - PlayerSword
+  - Crystal
+  - BossJaw
+  - BossClaw
+  - DragonFire
   layers:
   - Default
   - TransparentFX
@@ -40,7 +46,7 @@ TagManager:
   - BlurVCam
   - Doors
   - Fire
-  - 
+  - Sword
   - 
   - 
   - 

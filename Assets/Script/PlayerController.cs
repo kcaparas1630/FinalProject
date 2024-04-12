@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
         Messenger.AddListener(GameEvent.UNDER_BED, OnUnderBed);
         Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnDestroy()
     {
@@ -68,6 +70,8 @@ public class PlayerController : MonoBehaviour
         Messenger.RemoveListener(GameEvent.UNDER_BED, OnUnderBed);
         Messenger.RemoveListener(GameEvent.EXIT_BED, OnExitBed);
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnGameOver()
     {
@@ -226,9 +230,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Sword"))
+        if (other.gameObject.CompareTag("Sword") || other.gameObject.CompareTag("BossJaw") || other.gameObject.CompareTag("BossClaw") || other.gameObject.CompareTag("DragonFire"))
         {
-            Debug.Log("Sword Hit");
             Messenger.Broadcast(GameEvent.PLAYER_HIT);
         }
     }

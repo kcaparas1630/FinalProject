@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraSound : MonoBehaviour
 {
     [SerializeField] private AudioSource backgroundSound;
+    [SerializeField] private AudioClip bossFight;
     void Start()
     {
         
@@ -15,6 +16,7 @@ public class CameraSound : MonoBehaviour
         Messenger.AddListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.AddListener(GameEvent.PLAYER_INJURED, InjuredSound);
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
     }
     private void OnDestroy()
     {
@@ -22,6 +24,12 @@ public class CameraSound : MonoBehaviour
         Messenger.RemoveListener(GameEvent.CUTSCENE_FINISHED, OnCutsceneFinished);
         Messenger.RemoveListener(GameEvent.PLAYER_INJURED, InjuredSound);
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
+    }
+    private void OnBossCutsceneFinished()
+    {
+        backgroundSound.clip = bossFight;
+        backgroundSound.Play();
     }
     private void OnGameOver()
     {
