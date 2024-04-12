@@ -45,7 +45,8 @@ public class WalkthroughController : MonoBehaviour
     public void OnPauseGame()
     {
         pauseText.SetActive(false);
-        StartCoroutine(broadcastDoor());
+        Messenger.Broadcast(GameEvent.BASEMENTDOOR_OPEN);
+        //StartCoroutine(broadcastDoor());
         StartCoroutine(destroyGameObject());
         basementVirtualCamera.enabled = false; // brute force disable
     }
