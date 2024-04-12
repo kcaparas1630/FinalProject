@@ -32,4 +32,6 @@ public static class GameEvent
     public const string CRYSTAL_APPEAR = "CRYSTAL_APPEAR";
     public const string BOSS_CUTSCENE_PLAYING = "BOSS_CUTSCENE_PLAYING";
     public const string BOSS_CUTSCENE_FINISHED = "BOSS_CUTSCENE_FINISHED";
+    public const string GAME_START_CUTSCENE_PLAYING = "GAME_START_CUTSCENE_PLAYING";
+    public const string GAME_START_CUTSCENE_FINISHED = "GAME_START_CUTSCENE_FINISHED";
 }

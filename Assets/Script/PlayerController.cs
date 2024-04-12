@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnCutsceneFinished);
+        Messenger.AddListener(GameEvent.GAME_START_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnDestroy()
     {
@@ -72,6 +74,8 @@ public class PlayerController : MonoBehaviour
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnCutscenePlaying);
         Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnCutsceneFinished);
+        Messenger.RemoveListener(GameEvent.GAME_START_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnGameOver()
     {

@@ -8,7 +8,7 @@ public class LeverSwitch : MonoBehaviour
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private Animator leverAnim;
     [SerializeField] private PlayableDirector timeline;
-
+    [SerializeField] private Animator playerAnim;
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -17,6 +17,7 @@ public class LeverSwitch : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 leverAnim.SetTrigger("Down");
+                playerAnim.SetTrigger("OpenDoor");
                 interactiveText.SetActive(false);
                 StartCoroutine(leverTimelineStart());
             }

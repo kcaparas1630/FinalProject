@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BasementFloor.unity
     guid: 0306c4770b1a4e94c82579fe2bf1739d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CastleFloors.unity
     guid: 5c1f6de42d44ba647b5e048f618a4f11
   m_configObjects:

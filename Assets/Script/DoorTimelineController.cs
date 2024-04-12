@@ -20,7 +20,9 @@ public class DoorTimelineController : MonoBehaviour
 
     private void openDoor()
     {
-        StartCoroutine(OpenDoorCoroutine());
+        timeline.Play();
+        Messenger.Broadcast(GameEvent.CUTSCENE_PLAYING);
+        cutscenePlaying = true;
     }
     private void Update()
     {
@@ -40,13 +42,5 @@ public class DoorTimelineController : MonoBehaviour
         // Reset the cutscene playing flag
         cutscenePlaying = false;
         gateOpen.enabled = false;
-    }
-
-    private IEnumerator OpenDoorCoroutine()
-    {
-        yield return new WaitForSeconds(5f);
-        timeline.Play();
-        Messenger.Broadcast(GameEvent.CUTSCENE_PLAYING);
-        cutscenePlaying = true;
     }
 }

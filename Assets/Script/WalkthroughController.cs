@@ -15,7 +15,8 @@ public class WalkthroughController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera basementVirtualCamera;
     private void Start()
     {
-        StartCoroutine(textShow());
+        movementKeyText.SetActive(false);
+        
     }
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class WalkthroughController : MonoBehaviour
         Messenger.AddListener(GameEvent.TORCH_GRAB, OnTorchGrab);
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
         Messenger.AddListener(GameEvent.PAUSE_GAME, OnPauseGame);
+        Messenger.AddListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnDestroy()
     {
@@ -33,10 +35,17 @@ public class WalkthroughController : MonoBehaviour
         Messenger.RemoveListener(GameEvent.TORCH_GRAB, OnTorchGrab);
         Messenger.RemoveListener(GameEvent.TORCH_WAVE, OnTorchWave);
         Messenger.RemoveListener(GameEvent.PAUSE_GAME, OnPauseGame);
+        Messenger.RemoveListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
+    }
+
+    private void OnCutsceneFinished()
+    {
+        StartCoroutine(textShow());
     }
     public void OnPauseGame()
     {
         pauseText.SetActive(false);
+        StartCoroutine(broadcastDoor());
         StartCoroutine(destroyGameObject());
         basementVirtualCamera.enabled = false; // brute force disable
     }
@@ -48,7 +57,7 @@ public class WalkthroughController : MonoBehaviour
     private void OnTorchGrab()
     {
         followText.SetActive(false);
-        StartCoroutine(torchWaveTextShow());
+        torchWaveKeyText.SetActive(true);
     }
     private void OnWalkthroughCircle()
     {
@@ -70,11 +79,12 @@ public class WalkthroughController : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         movementKeyText.SetActive(true);
+
     }
-    IEnumerator torchWaveTextShow()
+    IEnumerator broadcastDoor()
     {
-        yield return new WaitForSeconds(10f);
-        torchWaveKeyText.SetActive(true); // reason: it will show on cutscene
+        yield return new WaitForSeconds(2f);
+        Messenger.Broadcast(GameEvent.BASEMENTDOOR_OPEN);
     }
     IEnumerator destroyGameObject()
     {
