@@ -9,9 +9,13 @@ public class FinalTimelineTrigger : MonoBehaviour
     private bool cutscenePlaying = false;
     void Start()
     {
-        timeline.Play();
-        Messenger.Broadcast(GameEvent.BOSS_CUTSCENE_PLAYING);
-        cutscenePlaying = true;
+        if (!cutscenePlaying)
+        {
+            timeline.Play();
+            Messenger.Broadcast(GameEvent.BOSS_CUTSCENE_PLAYING);
+            cutscenePlaying = true;
+        }
+        
     }
 
     private void Update()

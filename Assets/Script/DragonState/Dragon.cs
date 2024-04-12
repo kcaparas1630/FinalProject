@@ -45,10 +45,14 @@ public class Dragon : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.BOSS_DEATH, OnBossDeath);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
     }
     private void OnDestroy()
     {
         Messenger.AddListener(GameEvent.BOSS_DEATH, OnBossDeath);
+        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
     }
     private void OnBossDeath()
     {
@@ -135,6 +139,14 @@ public class Dragon : MonoBehaviour
             yield return new WaitForSeconds(1f);
             isSwitch = false;
         }
+    }
+    private void OnBossCutscenePlaying()
+    {
+        Agent.enabled = false;
+    }
+    private void OnBossCutsceneFinished()
+    {
+        Agent.enabled = true;
     }
     //public bool IsPlayerWithinNavMeshBounds()
     //{
