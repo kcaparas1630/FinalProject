@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Playables;
 
 public class FinalTimelineTrigger : MonoBehaviour
 {
     [SerializeField] private PlayableDirector timeline;
     private bool cutscenePlaying = false;
+    [SerializeField] private NavMeshAgent dragon;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) // Change the tag as per your requirements
@@ -14,6 +16,7 @@ public class FinalTimelineTrigger : MonoBehaviour
             // Play the timeline when the player enters the collider
             timeline.Play();
             Messenger.Broadcast(GameEvent.BOSS_CUTSCENE_PLAYING);
+            dragon.enabled = false;
             cutscenePlaying = true;
         }
     }
@@ -35,6 +38,7 @@ public class FinalTimelineTrigger : MonoBehaviour
         Messenger.Broadcast(GameEvent.BOSS_CUTSCENE_FINISHED);
         // Reset the cutscene playing flag
         cutscenePlaying = false;
+        dragon.enabled = true;
         Destroy(this.gameObject);
     }
 }

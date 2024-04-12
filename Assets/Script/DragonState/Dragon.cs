@@ -45,14 +45,11 @@ public class Dragon : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.BOSS_DEATH, OnBossDeath);
-        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
-        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
     }
     private void OnDestroy()
     {
         Messenger.AddListener(GameEvent.BOSS_DEATH, OnBossDeath);
-        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
-        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
+      
     }
     private void OnBossDeath()
     {
@@ -140,57 +137,5 @@ public class Dragon : MonoBehaviour
             isSwitch = false;
         }
     }
-    private void OnBossCutscenePlaying()
-    {
-        Agent.enabled = false;
-        Agent.isStopped = true;
-        shouldFollowPlayer = false;
-    }
-    private void OnBossCutsceneFinished()
-    {
-        Agent.enabled = true;
-        Agent.isStopped = false;
-        shouldFollowPlayer = true;
-    }
-    //public bool IsPlayerWithinNavMeshBounds()
-    //{
-    //    NavMeshHit hit;
-    //    Vector3 playerPosition = Player.transform.position;
-    //    bool isWithinNavMesh = NavMesh.SamplePosition(playerPosition, out hit, 2.0f, NavMesh.AllAreas);
-
-    //    if (isWithinNavMesh)
-    //    {
-    //        shouldFollowPlayer = true;
-    //    }
-    //    // Debug information
-    //    if (!isWithinNavMesh)
-    //    {
-    //        Debug.LogWarning("Player position is not on the NavMesh.");
-    //        Debug.Log("Player Position: " + playerPosition);
-    //    }
-
-    //    return isWithinNavMesh;
-    //}
-
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    // Check if the player is within the NavMesh bounds
-    //    if (IsPlayerWithinNavMeshBounds())
-    //    {
-    //        if (shouldFollowPlayer)
-    //        {
-    //            // Continue following the player if they are within bounds
-    //            Agent.SetDestination(Player.transform.position);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // Stop following the player if they are outside the NavMesh bounds
-    //        shouldFollowPlayer = false;
-    //        Agent.ResetPath(); // Clear the current path
-    //    }
-    //}
 
 }
