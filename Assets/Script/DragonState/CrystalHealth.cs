@@ -21,8 +21,6 @@ public class CrystalHealth : MonoBehaviour
     IEnumerator collideCounter()
     {
         hasHit = true;
-        yield return new WaitForSeconds(3f);
-
         if (hasHit)
         {
             collideCount++;
@@ -35,7 +33,7 @@ public class CrystalHealth : MonoBehaviour
                 StartCoroutine(DestroyCrystal());
             }
         }
-
+        yield return new WaitForSeconds(3f);
         hasHit = false;
     }
 

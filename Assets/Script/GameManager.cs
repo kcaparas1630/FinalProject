@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener(GameEvent.TORCH_WAVE, OnTorchWave);
         Messenger.AddListener(GameEvent.FINAL_EVENT, OnFinalEvent);
         Messenger.AddListener(GameEvent.BOSSHEALTH_REDUCE, OnBossHealthReduce);
-        
     }
     private void OnDestroy()
     {
@@ -53,8 +52,15 @@ public class GameManager : MonoBehaviour
         }
         if (crystalsDestroyed == MAXCRYSTALS) {
             Messenger.Broadcast(GameEvent.BOSS_DEATH);
-            finalCutscene.Play();
+            StartCoroutine(playFinalCutscene());
         }
+    }
+    IEnumerator playFinalCutscene()
+    {
+        yield return new WaitForSeconds(2f);
+        finalCutscene.Play();
+        yield return new WaitForSeconds(13f);
+        Messenger.Broadcast(GameEvent.GAME_FINISHED);
     }
     private void OnFinalEvent()
     {

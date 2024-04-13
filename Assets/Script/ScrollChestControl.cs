@@ -10,6 +10,7 @@ public class ScrollChestControl : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private ScrollPanelPopup scrollPopup;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioSource openChest;
     private bool used = false;
     private void OnTriggerStay(Collider other)
     {
@@ -25,6 +26,7 @@ public class ScrollChestControl : MonoBehaviour
                     used = true;
                     Messenger.Broadcast(GameEvent.OPEN_SCROLLCHEST);
                     anim.SetTrigger("Open");
+                    openChest.Play();
                     StartCoroutine(GetScroll());
                 }
             }

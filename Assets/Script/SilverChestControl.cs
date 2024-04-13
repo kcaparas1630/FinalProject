@@ -7,7 +7,7 @@ public class SilverChestControl : MonoBehaviour
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
-
+    [SerializeField] private AudioSource openChest;
 
     private void OnTriggerStay(Collider other)
     {
@@ -17,6 +17,7 @@ public class SilverChestControl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 anim.SetTrigger("Open");
+                openChest.Play();
                 StartCoroutine(GetSilverKey());
             }
         }

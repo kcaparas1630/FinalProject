@@ -9,6 +9,7 @@ public class ChestControl : MonoBehaviour
     [SerializeField] private GameObject keyText;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioSource openChest;
     private bool used = false;
 
     private void OnTriggerStay(Collider other)
@@ -32,6 +33,7 @@ public class ChestControl : MonoBehaviour
                     keyText.SetActive(false);
                     interactiveText.SetActive(false);
                     Messenger.Broadcast(GameEvent.OPEN_CHEST);
+                    openChest.Play();
                     anim.SetTrigger("Open");
                     StartCoroutine(GetGoldenKey());
                 }

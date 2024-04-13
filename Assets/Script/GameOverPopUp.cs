@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameOverPopUp : MonoBehaviour
 {
     [SerializeField] private AudioSource gameOverSound;
+    [SerializeField] private AudioClip gameFinishedSound;
     private void Start()
     {
         this.gameObject.SetActive(false);
@@ -12,12 +13,22 @@ public class GameOverPopUp : MonoBehaviour
     private void Awake()
     {
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.AddListener(GameEvent.GAME_FINISHED, OnGameFinished);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
+        Messenger.RemoveListener(GameEvent.GAME_FINISHED, OnGameFinished);
     }
     
+    private void OnGameFinished()
+    {
+        if(!gameOverSound.isPlaying)
+        {
+            gameOverSound.clip = gameFinishedSound;
+            gameOverSound.Play();
+        }
+    }
     private void OnGameOver()
     {
         Debug.Log("Gets inside");

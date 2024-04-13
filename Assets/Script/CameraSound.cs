@@ -17,6 +17,7 @@ public class CameraSound : MonoBehaviour
         Messenger.AddListener(GameEvent.PLAYER_INJURED, InjuredSound);
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
     }
     private void OnDestroy()
     {
@@ -25,6 +26,11 @@ public class CameraSound : MonoBehaviour
         Messenger.RemoveListener(GameEvent.PLAYER_INJURED, InjuredSound);
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
+        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+    }
+    private void OnBossCutscenePlaying()
+    {
+        backgroundSound.Stop();
     }
     private void OnBossCutsceneFinished()
     {

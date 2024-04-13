@@ -9,7 +9,8 @@ public class MonsterChest : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject enemy;
-   
+    [SerializeField] private AudioSource openChest;
+
     private bool used = false;
     private void OnTriggerStay(Collider other)
     {
@@ -24,6 +25,7 @@ public class MonsterChest : MonoBehaviour
                     used = true;
                     Messenger.Broadcast(GameEvent.OPEN_MONSTERCHEST);
                     anim.SetTrigger("Open");
+                    openChest.Play();
                     StartCoroutine(MonsterInstantiate());
                 }
             }
