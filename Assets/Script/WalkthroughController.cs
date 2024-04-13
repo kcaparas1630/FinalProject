@@ -13,6 +13,7 @@ public class WalkthroughController : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private List<GameObject> walkthroughCircles = new List<GameObject>();
     [SerializeField] private CinemachineVirtualCamera basementVirtualCamera;
+    private bool hasFinishWalkthrough = false;
     private void Start()
     {
         movementKeyText.SetActive(false);
@@ -45,13 +46,20 @@ public class WalkthroughController : MonoBehaviour
     public void OnPauseGame()
     {
         pauseText.SetActive(false);
-        Messenger.Broadcast(GameEvent.BASEMENTDOOR_OPEN);
+        if(hasFinishWalkthrough)
+        {
+            Messenger.Broadcast(GameEvent.BASEMENTDOOR_OPEN);
+            hasFinishWalkthrough = false;
+            StartCoroutine(destroyGameObject());
+            basementVirtualCamera.enabled = false; // brute force disable
+        }
         //StartCoroutine(broadcastDoor());
-        StartCoroutine(destroyGameObject());
-        basementVirtualCamera.enabled = false; // brute force disable
+        
+      
     }
     private void OnTorchWave()
     {
+        hasFinishWalkthrough = true;
         torchWaveKeyText.SetActive(false);
         pauseText.SetActive(true);
     }
