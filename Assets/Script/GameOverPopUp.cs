@@ -23,6 +23,7 @@ public class GameOverPopUp : MonoBehaviour
     
     private void OnGameFinished()
     {
+        this.gameObject.SetActive(true);
         if(!gameOverSound.isPlaying)
         {
             gameOverSound.clip = gameFinishedSound;
