@@ -18,6 +18,8 @@ public class CameraSound : MonoBehaviour
         Messenger.AddListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.AddListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
         Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+        Messenger.AddListener(GameEvent.GAME_START_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.AddListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnDestroy()
     {
@@ -26,7 +28,9 @@ public class CameraSound : MonoBehaviour
         Messenger.RemoveListener(GameEvent.PLAYER_INJURED, InjuredSound);
         Messenger.RemoveListener(GameEvent.GAME_OVER, OnGameOver);
         Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_FINISHED, OnBossCutsceneFinished);
-        Messenger.AddListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.BOSS_CUTSCENE_PLAYING, OnBossCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.GAME_START_CUTSCENE_PLAYING, OnCutscenePlaying);
+        Messenger.RemoveListener(GameEvent.GAME_START_CUTSCENE_FINISHED, OnCutsceneFinished);
     }
     private void OnBossCutscenePlaying()
     {
@@ -34,11 +38,13 @@ public class CameraSound : MonoBehaviour
     }
     private void OnBossCutsceneFinished()
     {
+        //change camera sound to bossfight sound
         backgroundSound.clip = bossFight;
         backgroundSound.Play();
     }
     private void OnGameOver()
     {
+        //stop sound because another audio source will play, on a different class
         backgroundSound.Stop();
     }
     private void InjuredSound()

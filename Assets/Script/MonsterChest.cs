@@ -11,7 +11,7 @@ public class MonsterChest : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private AudioSource openChest;
 
-    private bool used = false;
+    private bool used = false;// flag to prevent OnTriggerStay getting called every frames per second
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
@@ -22,7 +22,7 @@ public class MonsterChest : MonoBehaviour
                 keyText.SetActive(false);
                 if (Input.GetKey(KeyCode.E) && !used)
                 {
-                    used = true;
+                    used = true; // set used to true to prevent multi use of keys
                     Messenger.Broadcast(GameEvent.OPEN_MONSTERCHEST);
                     anim.SetTrigger("Open");
                     openChest.Play();

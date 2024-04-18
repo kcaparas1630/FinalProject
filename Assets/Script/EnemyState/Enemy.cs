@@ -52,17 +52,6 @@ public class Enemy : MonoBehaviour
         Messenger.AddListener(GameEvent.EXIT_BED, OnExitBed);
     }
 
-    //public void isCooldownFinish()
-    //{
-    //    StartCoroutine(AttackCountdown());
-       
-    //}
-    //IEnumerator AttackCountdown()
-    //{
-    //    yield return new WaitForSeconds(2.5f);
-    //    hasAttacked = false;
-     
-    //}
     public void playAttackSound()
     {
         if(!attackSound.isPlaying)
@@ -106,6 +95,7 @@ public class Enemy : MonoBehaviour
         }
         
     }
+    //Changes state from any state to duck state/fear
     IEnumerator ChangeStateCooldown()
     {
         yield return new WaitForSeconds(5f);

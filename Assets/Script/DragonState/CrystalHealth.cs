@@ -20,6 +20,7 @@ public class CrystalHealth : MonoBehaviour
 
     IEnumerator collideCounter()
     {
+        //set to true to prevent multi-hit
         hasHit = true;
         if (hasHit)
         {
@@ -34,6 +35,7 @@ public class CrystalHealth : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(3f);
+        //return to false to cycle hasHit
         hasHit = false;
     }
 

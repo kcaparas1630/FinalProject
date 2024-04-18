@@ -9,7 +9,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private AudioSource doorOpen;
-    private bool isOpen = false;
+    private bool isOpen = false;// flag to trigger different animations
     private void Start()
     {
         interactiveText.SetActive(false);
@@ -21,20 +21,9 @@ public class DoorController : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             interactiveText.SetActive(true);
-            if (this.gameObject.CompareTag("GateFinish"))
-            {
-                if (Input.GetKey(KeyCode.E))
-                {
-                    //Change this into coroutine and grab a open door animation.
-                    doorBudgeText.SetActive(true);
-                    if(!doorOpen.isPlaying)
-                    {
-                        doorOpen.Play();
-                    }
-                }
-            }
             if (Input.GetKey(KeyCode.E))
             {
+                //if not open then trigger open animation
                 if(!isOpen)
                 {
                     playerAnim.SetTrigger("OpenDoor");
@@ -45,6 +34,7 @@ public class DoorController : MonoBehaviour
                         doorOpen.Play();
                     }
                 }
+                //if open trigger close animation
                 else
                 {
                     playerAnim.SetTrigger("OpenDoor");

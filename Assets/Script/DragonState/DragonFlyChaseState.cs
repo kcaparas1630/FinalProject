@@ -12,7 +12,7 @@ public class DragonFlyChaseState : DragonStateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
      
-        dragon.Agent.baseOffset = -2f;
+        dragon.Agent.baseOffset = -2f; // make the dragon fly a little bit lower.
 
         dragon.Agent.SetDestination(dragon.Player.transform.position);
         if (dragon.isDead)
@@ -34,6 +34,6 @@ public class DragonFlyChaseState : DragonStateMachineBehaviour
     }
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        dragon.Agent.baseOffset = 0f;
+        dragon.Agent.baseOffset = 0f;//set it back to 0 to prevent unnecessary behaviour
     }
 }

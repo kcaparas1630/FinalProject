@@ -85,9 +85,11 @@ public class Monster : MonoBehaviour
     }
     IEnumerator AttackCooldown()
     {
-        hasAttacked = true;
+        hasAttacked = true; // sets flag to true to achieve cooldown for attacking.
         Vector3 directionToTarget = target.position - transform.position;
+        //look at the player
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+        //assigns targetRotation to transform.rotation of monster.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         anim.SetTrigger("Attack");
         if (!attackScream.isPlaying)

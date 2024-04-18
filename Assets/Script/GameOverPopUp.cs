@@ -23,16 +23,18 @@ public class GameOverPopUp : MonoBehaviour
     
     private void OnGameFinished()
     {
+        //sets the ui panel to active
         this.gameObject.SetActive(true);
         if(!gameOverSound.isPlaying)
         {
+            //change gameOverSound to a happy melody
             gameOverSound.clip = gameFinishedSound;
             gameOverSound.Play();
         }
     }
     private void OnGameOver()
     {
-        Debug.Log("Gets inside");
+        //sets the ui panel to active
         this.gameObject.SetActive(true);
         if (!gameOverSound.isPlaying)
         {
@@ -40,16 +42,6 @@ public class GameOverPopUp : MonoBehaviour
         }
         StartCoroutine(pauseGame());
     }
-
-    public void RestartGame()
-    {
-        Debug.Log("Apply restart on Application Build");
-    }
-    public void ExitGame()
-    {
-        Debug.Log("Apply Menu exit on Application Build");
-    }
-
     IEnumerator pauseGame()
     {
         yield return new WaitForSeconds(1f);

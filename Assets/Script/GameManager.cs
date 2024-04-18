@@ -43,14 +43,14 @@ public class GameManager : MonoBehaviour
     }
     private void OnBossHealthReduce()
     {
-        crystalsDestroyed++;
-        dragonHurt.Play();
-        Debug.Log(crystalsDestroyed);
+        crystalsDestroyed++;//increment by 1 per crystal destroy
+        dragonHurt.Play();//sound trigger when a crystal destroyed
         if (crystalsDestroyed == 3)
         {
             finalCrystal.SetActive(true);
         }
         if (crystalsDestroyed == MAXCRYSTALS) {
+            //Trigger death for boss, play animation of death.
             Messenger.Broadcast(GameEvent.BOSS_DEATH);
             StartCoroutine(playFinalCutscene());
         }
@@ -84,10 +84,12 @@ public class GameManager : MonoBehaviour
         SkeysCollected++;
         ui.UpdateSKeyCount(SkeysCollected);
     }
+    // checks if num of skey is more than 0
     public bool SKeyValidation()
     {
         return SkeysCollected > 0;
     }
+    //For any golden key or special chests, checks for validation using SKeyValidation method
     public void UseSKey()
     {
         if (SKeyValidation())
@@ -97,11 +99,13 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    //increments gold keys count
     public void CollectGKey()
     {
         GkeysCollected++;
         ui.UpdateGKeyCount(GkeysCollected);
     }
+    //use gkey if more than 0
     public void UseGKey()
     {
         if (GkeysCollected > 0)

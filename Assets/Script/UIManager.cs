@@ -15,14 +15,7 @@ public class UIManager : MonoBehaviour
             StartCoroutine(DelayedPauseGame());
         }
     }
-    public void Restart()
-    {
-        Debug.Log("Restart on Build");
-    }
-    public void Exit()
-    {
-        Debug.Log("Exit on Build");
-    }
+   
     public void ReturnToGame()
     {
         Time.timeScale = 1.0f;

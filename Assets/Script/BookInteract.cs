@@ -23,6 +23,7 @@ public class BookInteract : MonoBehaviour
         if (!isTaskCompleted) // Check if the task is not already completed
         {
             isTaskCompleted = true; // Set the task as completed
+            //Sends a broadcast for GameManager to receive.
             Messenger.Broadcast(GameEvent.CLOSE_CANVAS);
         }
     }
@@ -44,7 +45,6 @@ public class BookInteract : MonoBehaviour
                 bookCanvas.SetActive(true);
                 interactiveText.SetActive(false);
                 Messenger.Broadcast(GameEvent.OPEN_CANVAS);
-                //Pause(); Find a way to pause but continue canvas
             }
         }
     }

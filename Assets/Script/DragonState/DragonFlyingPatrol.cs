@@ -13,7 +13,7 @@ public class DragonFlyingPatrol : DragonStateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        dragon.Agent.baseOffset = -2f;
+        dragon.Agent.baseOffset = -2f;//makes it fly lower
         if (dragon.Agent.remainingDistance <= dragon.Agent.stoppingDistance)
         {
             animator.SetTrigger("FlyIdle");
@@ -25,6 +25,6 @@ public class DragonFlyingPatrol : DragonStateMachineBehaviour
     }
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        dragon.Agent.baseOffset = 0f;
+        dragon.Agent.baseOffset = 0f; // set back to 0 to prevent unecessary behaviour
     }
 }

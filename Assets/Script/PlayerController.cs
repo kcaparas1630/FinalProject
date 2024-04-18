@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
         {
             lowHealth.volume = 3;
             lowHealth.Play();
+            //changes footsteps to injured clip
             movementAudioSource.clip = injured;
             if (!movementAudioSource.isPlaying)
             {
@@ -136,12 +137,13 @@ public class PlayerController : MonoBehaviour
     private void OnCutsceneFinished()
     {
         isCutscenePlaying = false;
+        movementAudioSource.Play();
     }
     private void StopMovement()
     {
         isCutscenePlaying = true;
-        // Stop movement when the cutscene is playing
-        horizInput = 0f;
+        //Stop movement when the cutscene is playing
+       horizInput = 0f;
         vertInput = 0f;
         animator.SetFloat("Velocity", 0f);
         movementAudioSource.Stop();
@@ -191,6 +193,11 @@ public class PlayerController : MonoBehaviour
                 RotateToFaceMovement(movement);
                 RotatePlayerToFaceAwayFromCamera();
             }
+            if (movement.magnitude == 0)
+            {
+                movementAudioSource.Play();
+            }
+   
 
             // Calculate movement direction including gravity
             Vector3 moveDirection = movement * speed + Vector3.up * yVelocity;
@@ -201,24 +208,9 @@ public class PlayerController : MonoBehaviour
             // Move the player using the CharacterController
             player.Move(moveDirection * Time.deltaTime);
             // Play movement audio if moving
-            if (movement.magnitude > 0 && !movementAudioSource.isPlaying)
-            {
-                movementAudioSource.Play();
-            }
-            // Stop movement audio if not moving
-            else if (movement.magnitude == 0 && movementAudioSource.isPlaying)
-            {
-                movementAudioSource.Stop();
-            }
+            
         }
-        else
-        {
-            // Stop movement when a cutscene is playing
-            horizInput = 0f;
-            vertInput = 0f;
-            animator.SetFloat("Velocity", 0f);
-            movementAudioSource.Stop();
-        }
+        
     }
 
 
@@ -265,13 +257,10 @@ public class PlayerController : MonoBehaviour
     {
         // isolate the camera's Y rotation
         Quaternion camRotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y, 0);
-
-        // set the player's rotation
-        //transform.rotation = camRotation;
-
         // replace the above line with this one to enable smoothing
         transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, rotateToFaceAwayFromCameraSpeed * Time.deltaTime);
     }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         float pushForce = 5.0f;
@@ -283,13 +272,6 @@ public class PlayerController : MonoBehaviour
         {
             body.velocity = hit.moveDirection * pushForce;
         }
-    }
-
-    private IEnumerator IdleChangeAnimOnDelay()
-    {
-        yield return new WaitForSeconds(5f);
-
-        animator.SetTrigger("IdleWait");
     }
 
 }

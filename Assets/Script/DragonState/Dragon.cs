@@ -86,7 +86,7 @@ public class Dragon : MonoBehaviour
     {
         return Random.Range(0,2); // return 0 and 1 exclusively
     }
-
+    //takes parameter value from method ChooseMovementMode
     public void ExecuteMovement(int movementIndex)
     {
         switch(movementIndex)
@@ -105,8 +105,9 @@ public class Dragon : MonoBehaviour
    
     public int ChooseRandomAttack()
     {
-        return Random.Range(0, 3);
+        return Random.Range(0, 3);// return 0 to 2 exclusively
     }
+    //takes parameter value from ChooseRandomAttack method
     public void ExecuteAttack(int attackIndex)
     {
         switch(attackIndex)
@@ -126,7 +127,7 @@ public class Dragon : MonoBehaviour
 
         }
     }
-
+    // changes movementMode from any state after 15 seconds.
     IEnumerator SwitchMovementModeRoutine()
     {
         while (true)
@@ -134,6 +135,7 @@ public class Dragon : MonoBehaviour
             yield return new WaitForSeconds(15f); // Wait for 15 seconds
             isSwitch = true;
             yield return new WaitForSeconds(1f);
+            //returns to false to cycle back
             isSwitch = false;
         }
     }

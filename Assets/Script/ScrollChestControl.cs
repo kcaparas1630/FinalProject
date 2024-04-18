@@ -11,7 +11,7 @@ public class ScrollChestControl : MonoBehaviour
     [SerializeField] private ScrollPanelPopup scrollPopup;
     [SerializeField] private Animator anim;
     [SerializeField] private AudioSource openChest;
-    private bool used = false;
+    private bool used = false;// flag to prevent OnTriggerStay getting called every frames per second
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
@@ -23,7 +23,7 @@ public class ScrollChestControl : MonoBehaviour
                 keyText.SetActive(false);
                 if (Input.GetKey(KeyCode.E) && !used)
                 {
-                    used = true;
+                    used = true;// set used to true to prevent multi use of keys
                     Messenger.Broadcast(GameEvent.OPEN_SCROLLCHEST);
                     anim.SetTrigger("Open");
                     openChest.Play();

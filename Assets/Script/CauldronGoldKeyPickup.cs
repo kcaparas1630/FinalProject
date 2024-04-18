@@ -6,7 +6,7 @@ public class CauldronGoldKeyPickup : MonoBehaviour
 {
     [SerializeField] private GameObject interactiveText;
     [SerializeField] private Animator cauldronAnim;
-    private bool used = false;
+    private bool used = false; // flag to prevent multi trigger from OnTriggerStay
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -15,6 +15,7 @@ public class CauldronGoldKeyPickup : MonoBehaviour
             if (Input.GetKey(KeyCode.E) && !used)
             {
                 cauldronAnim.SetTrigger("Pickup");
+                //sets to true to prevent multi-click
                 used = true;
                 StartCoroutine(GetGoldenKey());
             }

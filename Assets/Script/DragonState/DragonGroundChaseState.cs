@@ -12,8 +12,10 @@ public class DragonGroundChaseState : DragonStateMachineBehaviour
     }
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      
+
+        //chooses a random attack and assign it into variable
         int randomAttackMode = dragon.ChooseRandomAttack();
+        //pass in randomAttackMode as an argument to be passed in to ExecuteAttack method
         dragon.ExecuteAttack(randomAttackMode);
         dragon.Agent.SetDestination(dragon.Player.transform.position);
         if(dragon.isDead)
