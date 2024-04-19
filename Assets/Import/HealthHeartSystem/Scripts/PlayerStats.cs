@@ -34,20 +34,34 @@ public class PlayerStats : MonoBehaviour
     public float Health { get { return health; } }
     public float MaxHealth { get { return maxHealth; } }
     public float MaxTotalHealth { get { return maxTotalHealth; } }
+    private bool godMode = false;
 
     private void Awake()
     {
         Messenger.AddListener(GameEvent.PLAYER_HIT, TakeDamage);
+        Messenger.AddListener(GameEvent.GOD_MODE, OnGodMode);
+        Messenger.AddListener(GameEvent.NORMAL_MODE, OnNormalMode);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.PLAYER_HIT, TakeDamage);
+        Messenger.RemoveListener(GameEvent.GOD_MODE, OnGodMode);
+        Messenger.RemoveListener(GameEvent.NORMAL_MODE, OnNormalMode);
     }
-
+    private void OnGodMode()
+    {
+        godMode = true;
+    }
+    private void OnNormalMode()
+    {
+        godMode = false;
+    }
     public void TakeDamage()
     {
-        
-        StartCoroutine(DamageDelay());
+        if (!godMode)
+        {
+            StartCoroutine(DamageDelay());
+        }
         if(health == 1)
         {
             Messenger.Broadcast(GameEvent.PLAYER_INJURED);

@@ -35,4 +35,6 @@ public static class GameEvent
     public const string GAME_START_CUTSCENE_PLAYING = "GAME_START_CUTSCENE_PLAYING";
     public const string GAME_START_CUTSCENE_FINISHED = "GAME_START_CUTSCENE_FINISHED";
     public const string GAME_FINISHED = "GAME_FINISHED";
+    public const string GOD_MODE = "GOD_MODE";
+    public const string NORMAL_MODE = "NORMAL_MODE";
 }

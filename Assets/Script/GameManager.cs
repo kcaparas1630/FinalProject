@@ -12,12 +12,15 @@ public class GameManager : MonoBehaviour
     private int GkeysCollected = 0;
     private int crystalsDestroyed = 0;
     private int MAXCRYSTALS = 4;
+    private bool godMode = false;
     [SerializeField] GameObject gateText;
     [SerializeField] UpdateUIManager ui;
     [SerializeField] GameObject finalEventTrigger;
     [SerializeField] GameObject finalCrystal;
     [SerializeField] AudioSource dragonHurt;
     [SerializeField] PlayableDirector finalCutscene;
+    [SerializeField] GameObject GodModeText;
+    [SerializeField] GameObject NormalModeText;
     private void Awake()
     {
         Messenger.AddListener(GameEvent.KEY_PICKUP, CollectSKey);
@@ -77,7 +80,39 @@ public class GameManager : MonoBehaviour
         totalTasks = tasks.Length;
     }
 
-  
+    private void Update()
+    {
+        //Implementation of God Mode for Demo day
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            // Toggle the godMode boolean value
+            godMode = !godMode;
+
+            // Broadcast the appropriate event based on the new state of godMode
+            if (godMode)
+            {
+                GodModeText.SetActive(true);
+                Messenger.Broadcast(GameEvent.GOD_MODE);
+                StartCoroutine(GodModeTextCooldown());
+            }
+            else
+            {
+                NormalModeText.SetActive(true);
+                Messenger.Broadcast(GameEvent.NORMAL_MODE);
+                StartCoroutine(NormalModeTextCooldown());
+            }
+        }
+    }
+    IEnumerator GodModeTextCooldown()
+    {
+        yield return new WaitForSeconds(5f);
+        GodModeText.SetActive(false);
+    }
+    IEnumerator NormalModeTextCooldown()
+    {
+        yield return new WaitForSeconds(5f);
+        NormalModeText.SetActive(false);
+    }
 
     public void CollectSKey()
     {
