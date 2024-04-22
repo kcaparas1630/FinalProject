@@ -103,13 +103,18 @@ public class PlayerController : MonoBehaviour
             lowHealth.Play();
             //changes footsteps to injured clip
             movementAudioSource.clip = injured;
-            if (!movementAudioSource.isPlaying)
-            {
-                movementAudioSource.Play();
-            }
+            //movementAudioSource.Play();
             speed = 1.5f;
         }
-        animator.SetBool("injured", true);
+        if (torch != null && torch.activeSelf)
+        {
+            animator.SetBool("injured", true);
+        }
+        if (sword != null && sword.activeSelf)
+        {
+            animator.SetBool("SwordInjured", true);
+        }
+       
     }
     private void TriggerHurtAnim()
     {
@@ -117,8 +122,16 @@ public class PlayerController : MonoBehaviour
         {
             damage.Play();
         }
-        animator.SetTrigger("hurt");
-        
+        if (torch != null && torch.activeSelf)
+        {
+            animator.SetTrigger("hurt");
+        }
+        if (sword != null && sword.activeSelf)
+        {
+            animator.SetTrigger("SwordHurt");
+        }
+
+
     }
     private void GameOverAnim()
     {
@@ -195,9 +208,13 @@ public class PlayerController : MonoBehaviour
             }
             if (movement.magnitude == 0)
             {
-                movementAudioSource.Play();
+                if (!movementAudioSource.isPlaying)
+                {
+                    movementAudioSource.Play();
+                }
             }
-   
+
+
 
             // Calculate movement direction including gravity
             Vector3 moveDirection = movement * speed + Vector3.up * yVelocity;

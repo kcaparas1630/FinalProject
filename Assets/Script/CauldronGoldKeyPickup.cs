@@ -21,6 +21,13 @@ public class CauldronGoldKeyPickup : MonoBehaviour
             }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            interactiveText.SetActive(false);
+        }
+    }
 
     IEnumerator GetGoldenKey()
     {

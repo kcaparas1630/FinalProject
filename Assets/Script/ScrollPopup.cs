@@ -18,4 +18,12 @@ public class ScrollPopup : MonoBehaviour
             }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            interactiveText.SetActive(false);
+        }
+        
+    }
 }

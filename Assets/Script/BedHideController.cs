@@ -53,7 +53,7 @@ public class BedHideController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            interactiveText.SetActive(true);
+            interactiveText.SetActive(false);
         }
     }
 }
